@@ -1,0 +1,18 @@
+
+.install-page
+{
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: lightgray 2px 1px 10px -2px;
+    text-align: left;
+}
+
+.install-page p{
+    font-family: nunitoregular, quicksandregular;
+    font-size: 14px;
+}
+
+.install-page table td{
+    font-family: lato !important;
+    border: none !important;
+}

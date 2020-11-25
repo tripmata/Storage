@@ -1,0 +1,55 @@
+html, body{
+    height: 100%;
+}
+
+.frontdesk-menu{
+    cursor: pointer;
+    display: inline-block;
+    padding: 10px;
+    border: 1px solid transparent;
+    min-width: 150px;
+    /*border-radius: 3px;*/
+    border-bottom: 3px solid transparent;
+}
+
+.date-input{
+    width: 100%;
+    border: none;
+    background-color: rgba(100,100,100,0.1);
+    padding: 10px;
+    font-family: Lato, serif;
+    outline: none;
+
+}
+
+.frontdesk-menu:hover{
+    border-bottom: 3px solid deepskyblue;
+}
+
+.frontdesk-menu.active{
+    border-bottom: 3px solid deepskyblue;
+}
+
+#front-desk-main{
+    height: 100%;
+}
+
+#small-calendar-con{
+    background-color: rgb(250,250,250);
+    height: 100%;
+}
+
+#large-calendar-con{
+    height: 100%;
+}
+
+.large-calendar{
+    overflow: auto;
+}
+
+.calendar-box{
+    border-left: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    padding: 2px;
+    text-align: center;
+}

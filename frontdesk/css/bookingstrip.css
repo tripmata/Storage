@@ -1,0 +1,16 @@
+
+.stripHt, th, td{
+	border: 1px solid lightgray;
+	border-collapse: collapse;
+}
+
+.stripHt{
+	text-align: center;
+}
+
+td{
+	width: 40px;
+	padding: 10px;
+	color: dimgray;
+	box-shadow: inset whitesmoke 0px 0px 4px 1px !important;
+}

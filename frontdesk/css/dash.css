@@ -1,0 +1,98 @@
+
+.menu-pan{
+	background: whitesmoke;
+	border-right: 1px solid silver;
+}
+
+.menu-head{
+	background-color: dimgray;
+	padding: 15px;
+	color: white;
+}
+.menu-head h4{
+	font-family: comfortaaregular;
+	text-align: center;
+}
+
+.menu-item{
+	padding: 10px;
+	cursor: pointer;
+}
+
+.menu-item.active{
+	border-right: 5px solid gray;
+}
+
+.menu-item:hover{
+	background-color: lightgray;
+	color: darkskyblue;
+}
+
+.menu-item h6{
+	font-family: comfortaaregular;
+	margin-left: 30px;
+}
+
+.divider{
+	padding-bottom: 20px;
+	padding-top: 20px;
+	border-bottom: 1px solid silver;
+}
+
+.page-head{
+	background-color: whitesmoke;
+	padding: 14px;
+	border-bottom: 1px solid silver;
+}
+
+.page-head h4{
+	color: dimgray;
+	font-family: comfortaaregular;
+}
+
+
+.page-country{
+	float: right;
+	font-size: 14px;
+	font-family: comfortaabold;
+	margin-top: 10px;
+}
+
+
+.min-menu
+{
+	list-style: none;
+}
+
+.min-menu li{
+	display: inline;
+	cursor: pointer;
+	font-family: abeezeeregular;
+}
+
+.min-menu .active{
+	display: inline;
+	cursor: pointer;
+	border-bottom: 4px solid gray;
+}
+
+
+.widget{
+	background-color: white;
+	border: 1px solid lightgray;
+	margin-top: 7px;
+}
+
+.post_widget{
+	background-color: white;
+	border: 1px solid lightgray;
+	margin-top: 8px;
+}
+
+.curve{
+	border-radius: 4px;
+}
+
+.lift{
+	box-shadow: 1px 1px 5px -1px gray;
+}

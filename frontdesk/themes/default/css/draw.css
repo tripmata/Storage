@@ -1,0 +1,45 @@
+
+.wix-textbox{
+	box-shadow: inset whitesmoke 0px 0px 4px 1px !important;
+}
+
+.wix-textbox:focus{
+	box-shadow: inset whitesmoke 0px 0px 2px 3px !important;
+	border: 1px solid silver !important;
+}
+
+.wix-select{
+	box-shadow: inset whitesmoke 0px 0px 4px 1px !important;
+}
+
+.wix-select:focus{
+	box-shadow: none !important;
+	border: 1px solid silver !important;
+}
+
+.outer-menu{
+    padding: 10px;
+    cursor: pointer;
+}
+
+.inner-menu{
+    padding: 5px;
+    cursor: pointer;
+}
+
+.menu-item:hover{
+    background-color: whitesmoke;
+}
+
+.menu-shell{
+
+}
+
+
+.widget{
+    background-color: white;
+}
+
+.curve{
+    border-radius: 4px;
+}

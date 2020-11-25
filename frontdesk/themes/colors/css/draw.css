@@ -1,0 +1,115 @@
+
+.outer-menu{
+    padding: 13px;
+    cursor: pointer;
+}
+
+.outer-menu.active{
+
+}
+
+.inner-menu{
+    padding: 5px;
+    cursor: pointer;
+}
+
+.menu-item:hover{
+    background-color: rgb(58,73,88);
+}
+
+.menu-shell{
+
+}
+
+
+.widget{
+    background-color: white;
+}
+
+.curve{
+    border-radius: 4px;
+}
+
+
+.menu-item{
+    color: white;
+    font-family: quicksandregular;
+}
+
+
+.icon-block{
+    padding: 5px;
+    border-radius: 4px;
+    display: inline-block;
+    text-align: center !important;
+    box-shadow: lightgray 0px 0px 6px 2px;
+    padding-left: 8px;
+}
+
+.icon-block.icon{
+    padding: 0px !important;
+    margin: 0px !important;
+    text-align: center !important;
+}
+
+.lift-1{
+    box-shadow: #E6E6E6 0px 1px 6px 2px;
+}
+
+.red-back{
+    background-color: rgb(255,83,112) !important;
+    color: white !important;
+}
+
+.blue-back{
+    background-color: rgb(64,153,255) !important;
+    color: white !important;
+}
+
+.green-back{
+    background-color: rgb(46,216,182) !important;
+    color: white !important;
+}
+
+.yellow-back{
+    background-color: rgb(255,182,77) !important;
+    color: white !important;
+}
+
+
+.yellow{
+    color: rgb(255,182,77);
+}
+
+.red{
+    color: rgb(255,83,112);
+}
+
+.green{
+    color: rgb(46,216,182);
+}
+
+.blue{
+    color: rgb(64,153,255);
+}
+
+
+yellow-border{
+    color: rgb(255,182,77);
+}
+
+.red-border{
+    color: rgb(255,83,112);
+}
+
+.green-border{
+    color: rgb(46,216,182);
+}
+
+.blue-border{
+    color: rgb(64,153,255);
+}
+
+#oder-filter-controls{
+    display: inline-block;
+}
