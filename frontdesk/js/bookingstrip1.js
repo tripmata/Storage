@@ -559,21 +559,21 @@ class Bookingstrip
 			{
 				if (today.getTime() > stopDate.getTime())
 				{
-					$(label).addClass("red-back");
+					$(label).addClass("red-back2");
 				}
 				else if (today.getTime() === stopDate.getTime())
 				{
-					$(label).addClass("yellow-back");
+					$(label).addClass("yellow-back2");
 				}
 				else
 				{
-					$(label).addClass("blue-back");
+					$(label).addClass("blue-back2");
 				}
 			}
 			else if (active === false)
 			{
 				//
-				$(label).addClass("yellow-back")
+				$(label).addClass("yellow-back2")
 			}
 		}
 		else if(stripType === "completed")

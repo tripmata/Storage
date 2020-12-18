@@ -1,0 +1,103 @@
+body{
+	margin: 0px;
+	padding: 0px;
+}
+
+
+.head-menu{
+	padding: 0px;
+}
+
+.head-menu ul{
+	list-style: none;
+	float: right;
+	margin-top: 20px;
+}
+
+
+
+.head-menu li{
+	display: inline-block;
+}
+
+.head-menu a{
+	text-decoration: none;
+	font-family: quicksandregular;
+	padding: 5px 15px 5px 15px;
+	color: rgb(0,100,140);
+	cursor: pointer;
+	border: 5px solid transparent;
+}
+
+.head-menu a:hover{
+	color: white;
+	text-decoration: none;
+	background-color: dodgerblue;
+	color: white;
+	border-radius: 20px;
+	border: 5px solid dodgerblue;
+}
+
+.head-menu h3{
+	font-family: comfortaabold;
+	float: left;
+	margin-top: 25px;
+}
+
+
+
+#modal
+{
+	position: fixed;
+	background: rgba(255,255,255,0.8);
+	z-index: 300;
+	width: 100%;
+	height: 100%;
+	display: none;
+}
+
+.slik{
+	font-family: nunitolight !important;
+}
+
+.slik-b{
+	font-family: nunitoregular !important;
+}
+
+.lato{
+	font-family: quicksandbold !important;
+}
+
+.widget{
+	background-color: white;
+	border: 1px solid lightgray;
+	margin-top: 7px;
+}
+
+.post_widget{
+	background-color: white;
+	border: 1px solid lightgray;
+	margin-top: 8px;
+}
+
+.curve{
+	border-radius: 4px;
+}
+
+.lift{
+	box-shadow: 1px 1px 5px -1px gray;
+}
+
+.carousel-caption-text-body{
+	color: white;
+	background-color:black;
+	opacity: 0.7;
+	border-radius:4px;
+	padding-left: 10px;
+}
+
+.carousel-nav{
+	background-color:black;
+	opacity: 0.7;
+	border-radius:4px;
+}

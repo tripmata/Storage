@@ -460,12 +460,14 @@
         let email = "";
         let user = "";
         let usertype = "";
+        let mode = 'external';
 
         if(place < entities.length)
         {
             email = entities[place].email.toLocaleLowerCase().trim();
             user = entities[place].id;
             usertype = entities[place].type;
+            mode = entities[place].messageType;
             $("#activity-text").html("Sending to "+entities[place].name+" "+entities[place].surname);
         }
         else if(place2 < openContacts.length)
@@ -507,12 +509,14 @@
                 from: message.from,
                 name: message.name,
                 user: user,
+                email: email,
                 type: usertype,
                 subject: message.subject,
                 replyto: message.replyto,
                 replytoname: message.name,
                 attachment: message.attachment,
                 message: message.body,
+                mode: mode,
 
                 job: "send mail"
             };

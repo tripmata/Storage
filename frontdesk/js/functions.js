@@ -136,9 +136,59 @@ function getJson(url,func)
 
 	function postJson(url, func, data, prepend)
 	{
-	    var params = typeof data == 'string' ? data : Object.keys(data).map(
-	            function(k){ return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]) }
-	        ).join('&');
+		if (data.toString() == (new FormData).toString())
+		{
+			// can we add the property id
+			if (typeof data == 'object')
+			{
+				var dataProperty = document.querySelector('*[data-property]');
+
+				// are we good ?
+				if (dataProperty !== null)
+				{
+					data.append('propertyid', dataProperty.getAttribute('data-property'));	
+				}
+
+				// look for token 
+				var dataToken = document.querySelector('*[data-token]');
+
+				// are we good ?
+				if (dataToken !== null)
+				{
+					data.append('request_token', dataToken.getAttribute('data-token'));
+				}
+			}
+
+			var params = data;
+		}
+		else
+		{
+			// can we add the property id
+			if (typeof data == 'object')
+			{
+				var dataProperty = document.querySelector('*[data-property]');
+
+				// are we good ?
+				if (dataProperty !== null)
+				{
+					data.propertyid = dataProperty.getAttribute('data-property');
+				}
+
+				// look for token 
+				var dataToken = document.querySelector('*[data-token]');
+
+				// are we good ?
+				if (dataToken !== null)
+				{
+					data.request_token = dataToken.getAttribute('data-token');
+				}
+			}
+			
+			var params = typeof data == 'string' ? data : Object.keys(data).map(
+					function(k){ return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]) }
+				).join('&');
+
+		}
 
 	    if(prepend == null)
 		{

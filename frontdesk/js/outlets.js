@@ -5,27 +5,35 @@
 
 	function logoutOutlet()
 	{
-		loadingButton({btn:"logout-btn"});
-		postJson("logout", function(data, status){
-			loadingButton({btn:"logout-btn",loading:false});
-			if(status == "done")
-			{
-				let d = JSON.parse(data);
-
-				if(d.status == "success")
+		if (location.href.match(/(\?handshake)/))
+		{
+			window.close();
+		}
+		else
+		{
+			loadingButton({btn:"logout-btn"});
+			postJson("logout", function(data, status){
+				loadingButton({btn:"logout-btn",loading:false});
+				if(status == "done")
 				{
-					location.reload();
+					let d = JSON.parse(data);
+
+					if(d.status == "success")
+					{
+						location.reload();
+					}
+					else
+					{
+						ShowModal("Logout failed. Try again");
+					}
 				}
 				else
 				{
-					ShowModal("Logout failed. Try again");
+					ShowModal("Connection error. Try again");
 				}
-			}
-			else
-			{
-				ShowModal("Connection error. Try again");
-			}
-		},{});
+			},{});
+
+		}
 	}
 
 	function openSecurity()
@@ -460,11 +468,23 @@
 	}
 	 */
 
-	function getElement(e)
+	function getElement(e, callback=null)
 	{
 		if(typeof e == "string")
 		{
-			return document.getElementById(e);
+			var id = document.getElementById(e);
+
+			// check callback
+			if (callback !== null && typeof callback == 'function')
+			{
+				callback.call(this, id);
+			}
+
+			// manage failed id
+			id = (id === null) ? Object.create(null) : id;
+
+			// return id
+			return id;
 		}
 		else
 		{

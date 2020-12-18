@@ -157,10 +157,20 @@
 
 .red-back{
     border: 1px solid #e4e4e4 !important;
-    color: rgb(0, 158, 253) !important;
+    color: #f20 !important;
+}
+
+.red-back2{
+    background: #f20;
+    color: #fff;
 }
 
 .blue-back{
+    background-color: rgb(64,153,255) !important;
+    color: white !important;
+}
+
+.blue-back2{
     background-color: rgb(64,153,255) !important;
     color: white !important;
 }
@@ -173,6 +183,11 @@
 .yellow-back{
     border: 1px solid #e4e4e4 !important; /* rgb(255,182,77) !important;*/
     color: #f4a204 !important;
+}
+
+.yellow-back2{
+    background: #f4a204 !important; 
+    color: #000;
 }
 
 .dark-back{
@@ -392,4 +407,16 @@ strong {
 
 .event p{
     margin-left: 40px;
+}
+
+
+.guest-info-header{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+
+.guest-info-header .search{
+    width: 250px !important;
 }

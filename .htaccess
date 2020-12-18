@@ -1,0 +1,11 @@
+RewriteEngine On
+#RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    Header set Vary "Origin"
+</IfModule>
+
+RewriteRule (.*) index.php/$1

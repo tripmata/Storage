@@ -262,7 +262,7 @@
 						let td1 = document.createElement("td");
 						td1.innerHTML = "<span class='blue-text'>"+d.Data[i].Name+" "+d.Data[i].Surname+"</span><br/>" +
                         "<span style='color: silver;'>Email: </span><span style='color: dimgray;'>"+
-                        d.Data[i].Email+"</span><br/>" +
+                        d.Data[i].InternalEmail+"</span><br/>" +
                         "<span style='color: silver;'>Phone: </span><span style='color: dimgray;'>"
                         +d.Data[i].Phone+"</span>";
 
@@ -3471,7 +3471,7 @@
 
 						let td2 = document.createElement("td");
 						td2.innerHTML = "<span style='color: silver;'>Phone: </span>"+d.Data[i].Phone+"<br/>" +
-						"<span style='color: silver;'>Email: </span>"+d.Data[i].Email;
+						"<span style='color: silver;'>Email: </span>"+d.Data[i].InternalEmail;
 
 
 						let td3 = document.createElement("td");
@@ -3481,7 +3481,7 @@
 
 						if(d.Data[i].Type === "subscriber")
 						{
-							let ob = {id:d.Data[i].Id, names:d.Data[i].Name +' '+d.Data[i].Surname, phone:d.Data[i].Phone, email:d.Data[i].Email};
+							let ob = {id:d.Data[i].Id, names:d.Data[i].Name +' '+d.Data[i].Surname, phone:d.Data[i].Phone, email:d.Data[i].InternalEmail};
 
 							con3 = "<div class='w3-container'> " +
 								"<div id='"+ d.Data[i].Id +"-btn' class='ui icon top right pointing dropdown button c-menu s-float-r'>" +

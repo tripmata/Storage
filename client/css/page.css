@@ -1,0 +1,76 @@
+.partner-menu h5 {
+    color: white !important;
+    text-align: center !important;
+    margin: 0 !important;
+}
+.partner-menu {
+    color: white;
+    cursor: pointer;
+    padding-top: 5px;
+    padding-bottom: 8px;
+}
+.partner-menu:hover {
+    background-color: rgba(0,0,0,0.2);
+}
+
+.partner-menu i{
+    font-size: 25px;
+}
+
+.partner-inner-menu{
+    cursor: pointer;
+    border-radius: 7px;
+}
+
+.property-menu {
+    color: white;
+    cursor: pointer;
+    padding-top: 5px;
+    padding-bottom: 8px;
+    float: left;
+}
+.property-menu:hover {
+    background-color: rgba(0,0,0,0.2);
+}
+
+.property-menu i{
+    font-size: 25px;
+}
+
+.partner-inner-menu{
+    cursor: pointer;
+    border-radius: 7px;
+}
+
+.active{
+    background-color: rgba(100,100,100,0.1) !important;
+}
+
+.car-select-tile{
+    height: 160px;
+    border: 3px solid whitesmoke;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+    background-color: white;
+}
+
+.car-select-tile h1{
+    position: absolute;
+    bottom: -10px;
+    left: -10px;
+    display: none;
+}
+
+.car-select-tile:hover{
+    border: 3px solid deepskyblue;
+}
+
+.profile-input{
+    border: none !important;
+    color: black !important;
+}
+
+.loadingItem{
+    color: transparent !important;
+}

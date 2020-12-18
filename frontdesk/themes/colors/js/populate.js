@@ -83,7 +83,7 @@ function populateOder(page)
                     let td2 = document.createElement("td");
                     td2.innerHTML = "<b class='blue-text'>" + dat.Data[i].Customer.Name + " " + dat.Data[i].Customer.Surname + "</b><br/>" +
                         "<span style='color: silver;'>Email: </span><span style='color: dimgray;'>" +
-                        dat.Data[i].Customer.Email + "</span><br/>" +
+                        dat.Data[i].Customer.InternalEmail + "</span><br/>" +
                         "<span style='color: silver;'><b>Pickup Branch:</b> </span><span style='color: dimgray;'>"
                         + dat.Data[i].PickupBranch + "</span><br/>" +
                         "<a class='ui tiny green-back circular label' style='font-weight: normal;'>" + dat.Data[i].Products.length + "</a>";
@@ -226,7 +226,7 @@ function populateCustomers(page)
                     let td2 = document.createElement("td");
                     td2.innerHTML = "<b class='blue-text'>"+dat.Data[i].Name+" "+dat.Data[i].Surname+"</b><br/>" +
                         "<span style='color: silver;'>Email: </span><span style='color: dimgray;'>"+
-                        dat.Data[i].Email+"</span><br/>" +
+                        dat.Data[i].InternalEmail+"</span><br/>" +
                         "<span style='color: silver;'>Type: </span><span style='color: dimgray;'>"
                         +dat.Data[i].Type+"</span>";
 

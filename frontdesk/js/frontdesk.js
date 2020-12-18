@@ -2873,8 +2873,6 @@
 					printObject.gridStyle = processReplace(receipt.Definitions.mm58.gridStyle, order);
 				}
 
-				console.log(printObject);
-
 				printJS(printObject);
 			}
 			else if(receipt.Definitions.type === "html")

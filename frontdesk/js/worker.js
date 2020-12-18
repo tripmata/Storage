@@ -1454,9 +1454,21 @@
         return d;
   }
 
-  function getElement(e) {
+  function getElement(e, callback=null) {
     if (typeof e == "string") {
-      return document.getElementById(e);
+      var id = document.getElementById(e);
+
+      // check callback
+      if (callback !== null && typeof callback == 'function')
+      {
+          callback.call(this, id);
+      }
+
+      // manage failed id
+      id = (id === null) ? Object.create(null) : id;
+
+      // return id
+      return id;
     }
     else {
 
@@ -2015,6 +2027,9 @@
     let shape = "square";
     let width = 250;
     let height = 250;
+
+    // bind config
+    this.CropConfig = o;
 
     cropPayload = payload;
 

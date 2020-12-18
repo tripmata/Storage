@@ -316,6 +316,7 @@
 									roomsList = data.rooms;
 									lodging = data.lodging;
 									reservations = data.reservations;
+									
 
 									for(let i = 0; i < lodging.length; i++)
 									{
@@ -2220,6 +2221,7 @@
 	let bookingTotal = 0;
 	let bookingTaxes = 0;
 	let bookingDiscount = 0;
+	
 	function calculate()
 	{
 		let total = 0.00;
@@ -3036,6 +3038,7 @@
 			if(roomsList[i].category ===  category)
 			{
 				rooms = roomsList[i].rooms;
+				break;
 			}
 		}
 
@@ -3083,14 +3086,18 @@
 		let room = null;
 
 		let ret = [];
+		let i;
 
-		for(let i = 0; i < roomsList.length; i++)
+		for(i = 0; i < roomsList.length; i++)
 		{
 			if(roomsList[i].category ===  category)
 			{
 				rooms = roomsList[i].rooms;
+				break;
 			}
 		}
+
+		console.log(rooms, roomsList);
 
 		if(typeof (rooms) === "object")
 		{
@@ -3133,6 +3140,7 @@
 				}
 			}
 		}
+
 		return ret;
 	}
 
@@ -3541,8 +3549,8 @@
 					"<h3 style='font-family: Nunito, quicksandregular, serif; font-weight: normal; vertical-align: middle;'>" +
 					"<i class='la la-user blue' style='vertical-align: middle; font-size: 1.6em;'></i> "+
 					res.Guest.Name+" "+res.Guest.Surname+"</h3>" +
-					"<h5 style='margin: 0; padding: 0; font-weight: normal; font-family: Nunito, quicksandregular;'>"+res.Guest.Email+"</h5>" +
-					"<h5 style='margin: 0; margin-top: 10px; padding: 0; font-weight: normal; font-family: Nunito, quicksandregularl'>"+res.Guest.Phone+"</h5>" +
+					"<h5 style='margin: 0; padding: 0; font-weight: normal; font-family: Nunito, quicksandregular;'>"+res.Guest.InternalEmail+"</h5>" +
+					"<h5 style='margin: 0; margin-top: 10px; padding: 0; font-weight: normal; font-family: Nunito, quicksandregularl'>"+res.Guest.Phone.substring(0,5)+"######</h5>" +
 
 					"</div>" +
 					"<div class='w3-col l4 m4 s4'>" +
@@ -3610,8 +3618,8 @@
 						"<h3 style='font-family: Nunito, quicksandregular, serif; font-weight: normal; vertical-align: middle;'>" +
 						"<i class='la la-user blue' style='vertical-align: middle; font-size: 1.5em;'></i>"+
 						res.Guest.Name+" "+res.Guest.Surname+"</h3>" +
-						"<h5 style='margin: 0; padding: 0; font-weight: normal; font-family: Nunito, quicksandregular;'>"+res.Guest.Email+"</h5>" +
-						"<h5 style='margin: 0; margin-top: 10px; padding: 0; font-weight: normal; font-family: Nunito, quicksandregularl'>"+res.Guest.Phone+"</h5>" +
+						"<h5 style='margin: 0; padding: 0; font-weight: normal; font-family: Nunito, quicksandregular;'>"+res.Guest.InternalEmail+"</h5>" +
+						"<h5 style='margin: 0; margin-top: 10px; padding: 0; font-weight: normal; font-family: Nunito, quicksandregularl'>"+res.Guest.Phone.substring(0,5)+"######</h5>" +
 						"</div>" +
 						"</div>" +
 						"<hr/> " +
@@ -3857,8 +3865,8 @@
 					"<h3 style='font-family: Nunito, quicksandregular, serif; font-weight: normal; vertical-align: middle;'>" +
 					"<i class='la la-user blue' style='vertical-align: middle; font-size: 1.5em;'></i>"+
 					res.Guest.Name+" "+res.Guest.Surname+"</h3>" +
-					"<h5 style='margin: 0; padding: 0; font-weight: normal; font-family: Nunito, quicksandregular;'>"+res.Guest.Email+"</h5>" +
-					"<h5 style='margin: 0; margin-top: 10px; padding: 0; font-weight: normal; font-family: Nunito, quicksandregularl'>"+res.Guest.Phone+"</h5>" +
+					"<h5 style='margin: 0; padding: 0; font-weight: normal; font-family: Nunito, quicksandregular;'>"+res.Guest.InternalEmail+"</h5>" +
+					"<h5 style='margin: 0; margin-top: 10px; padding: 0; font-weight: normal; font-family: Nunito, quicksandregularl'>"+res.Guest.Phone.substring(0,5)+"######</h5>" +
 					"</div>" +
 					"</div>" +
 					"<hr/> " +
@@ -4036,8 +4044,8 @@
 					"<h3 style='font-family: Nunito, quicksandregular, serif; font-weight: normal; vertical-align: middle;'>" +
 					"<i class='la la-user blue' style='vertical-align: middle; font-size: 1.6em;'></i> "+
 					res.Guest.Name+" "+res.Guest.Surname+"</h3>" +
-					"<h5 style='margin: 0; padding: 0; font-weight: normal; font-family: Nunito, quicksandregular;'>"+res.Guest.Email+"</h5>" +
-					"<h5 style='margin: 0; margin-top: 10px; padding: 0; font-weight: normal; font-family: Nunito, quicksandregularl'>"+res.Guest.Phone+"</h5>" +
+					"<h5 style='margin: 0; padding: 0; font-weight: normal; font-family: Nunito, quicksandregular;'>"+res.Guest.InternalEmail+"</h5>" +
+					"<h5 style='margin: 0; margin-top: 10px; padding: 0; font-weight: normal; font-family: Nunito, quicksandregularl'>"+res.Guest.Phone.substring(0,5)+"######</h5>" +
 
 					"</div>" +
 					"<div class='w3-col l4 m4 s4'>" +
@@ -4299,8 +4307,8 @@
 						"<h3 style='font-family: Nunito, quicksandregular, serif; font-weight: normal; vertical-align: middle;'>" +
 						"<i class='la la-user blue' style='vertical-align: middle; font-size: 1.6em;'></i> "+
 						res.Customer.Name+" "+res.Customer.Surname+"</h3>" +
-						"<h5 style='margin: 0; padding: 0; font-weight: normal; font-family: Nunito, quicksandregular;'>"+res.Customer.Email+"</h5>" +
-						"<h5 style='margin: 0; margin-top: 10px; padding: 0; font-weight: normal; font-family: Nunito, quicksandregularl'>"+res.Customer.Phone+"</h5>" +
+						"<h5 style='margin: 0; padding: 0; font-weight: normal; font-family: Nunito, quicksandregular;'>"+res.Customer.InternalEmail+"</h5>" +
+						"<h5 style='margin: 0; margin-top: 10px; padding: 0; font-weight: normal; font-family: Nunito, quicksandregularl'>"+res.Customer.Phone.substring(0,5)+"######</h5>" +
 
 						"</div>" +
 						"<div class='w3-col l4 m4 s4'>" +
@@ -4578,8 +4586,8 @@
 						"<h3 style='font-family: Nunito, quicksandregular, serif; font-weight: normal; vertical-align: middle;'>" +
 						"<i class='la la-user blue' style='vertical-align: middle; font-size: 1.6em;'></i> "+
 						res.Customer.Name+" "+res.Customer.Surname+"</h3>" +
-						"<h5 style='margin: 0; padding: 0; font-weight: normal; font-family: Nunito, quicksandregular;'>"+res.Customer.Email+"</h5>" +
-						"<h5 style='margin: 0; margin-top: 10px; padding: 0; font-weight: normal; font-family: Nunito, quicksandregularl'>"+res.Customer.Phone+"</h5>" +
+						"<h5 style='margin: 0; padding: 0; font-weight: normal; font-family: Nunito, quicksandregular;'>"+res.Customer.InternalEmail+"</h5>" +
+						"<h5 style='margin: 0; margin-top: 10px; padding: 0; font-weight: normal; font-family: Nunito, quicksandregularl'>"+res.Customer.Phone.substring(0,5)+"######</h5>" +
 
 						"</div>" +
 						"<div class='w3-col l4 m4 s4'>" +
@@ -4796,6 +4804,7 @@
 			}
 		}
 	}
+
 	function buildExtend(e)
 	{
 		let noshow = {};
@@ -4810,9 +4819,6 @@
 
 		return noshow;
 	}
-
-
-
 
 	function drawGuest()
 	{
@@ -4874,6 +4880,8 @@
 			"<div class='pad-1'>" +
 			DrawSearch({method:"populateCustomers"}).outerHTML +
 			"</div>" +
+
+			"<div id='add-customer-button'><span class='plus icon'></span></div>" +
 
 			DrawTable(["Profile pic", "Name", "Contact", "Gender", "Address", "Identification", "Action"],
 				{
@@ -5192,6 +5200,22 @@
 			"</div>" +
 			"</div>";
 
+		// check room avaliability
+		// managePreloader('Checking room availability', function(){
+		// 	//this.complete('Availability check completed');
+		// 	//ShowModal('2 rooms are currently occupied');
+
+		// 	// make request
+		// 	postJson('hms-admin/worker', function(e){
+
+		// 		console.log(JSON.parse(e));
+
+		// 	}, {
+		// 		'job' : 'check room availability',
+		// 		'list' : JSON.stringify(checkinList)
+		// 	});
+		// });
+
 		document.body.appendChild(checkinForm);
 
 		$(checkinForm).fadeIn(500, function () {
@@ -5221,6 +5245,7 @@
 				"</div>" +
 				"</div>"
 			);
+
 			$("#checkin-total-con").html("");
 
 			for(let i = 0; i < checkinList.length; i++)
@@ -5244,6 +5269,7 @@
 				}
 
 				total += (days * price);
+
 
 				let d = document.createElement("div");
 				d.innerHTML =
@@ -5313,6 +5339,8 @@
 		}
 	}
 
+	var customersJson = null;
+
 	function addGuestInfo()
 	{
 		if(checkinList.length > 0)
@@ -5320,146 +5348,8 @@
 			$("#guest-info-page").html("");
 			$("#action-btn-page").html("");
 
-
-			let d = document.createElement("div");
-			d.innerHTML =
-				"<div>" +
-
-				"<div class='w3-row l-pad-2 m-pad-1' style='background-color: rgb(250,250,250);'>" +
-				"<div class='w3-col l1 m2 s3'>" +
-				"<h3 style='color: dimgray;'>" +
-				"<i class='la la-user green-text la-2x' style='vertical-align: middle;'></i>" +
-				"</h3>" +
-				"</div>" +
-				"<div class='w3-col l11 210 s9'>" +
-				"<h3 style='color: dimgray; margin-top: 7px; font-family: varela_roundregular; font-weight: normal;'>" +
-				"Guest info" +
-				"</h3>" +
-				"</div>" +
-				"</div>" +
-
-				"<div class='l-pad-2 m-pad-1'>" +
-				"<div class='w3-row'>" +
-				"<div class='w3-col l6 m6 s12'>" +
-				"<div class='l-width-xl'>" +
-				"<div class='ui fluid left icon input'>" +
-				"<i class='user circel icon'></i> " +
-				"<input id='guest-name' class='wix-textbox' value='"+(checkin.guest.name != null ? checkin.guest.name : '')+"' placeholder='Name' type='text'/>" +
-				"</div>" +
-				"</div>" +
-				"</div> " +
-				"<div class='w3-col l6 m6 s12'>" +
-				"<div class=''>" +
-				"<div class='ui fluid left icon input'>" +
-				"<i class='icon'></i>" +
-				"<input id='guest-surname' class='wix-textbox' value='"+(checkin.guest.surname != null ? checkin.guest.surname : '')+"' placeholder='Surname' type='text'/>" +
-				"</div>" +
-				"</div>" +
-				"</div> " +
-				"</div> " +
-
-				"<div class='w3-row' style='margin-top: 10px;'>" +
-				"<div class='w3-col l4 m4 s12'>" +
-				"<div class='l-width-xl'>" +
-				"<div class='ui fluid left icon input'>" +
-				"<i class='mobile icon'></i> " +
-				"<input id='guest-phone' class='wix-textbox'  value='"+(checkin.guest.phone != null ? checkin.guest.phone : '')+"' placeholder='Phone' type='text'/>" +
-				"</div>" +
-				"</div>" +
-				"</div> " +
-				"<div class='w3-col l8 m8 s12'>" +
-				"<div class=''>" +
-				"<div class='ui fluid left icon input'>" +
-				"<i class='at icon'></i>" +
-				"<input id='guest-email' class='wix-textbox' value='"+(checkin.guest.email != null ? checkin.guest.email : '')+"' placeholder='Email' type='text'/>" +
-				"</div>" +
-				"</div>" +
-				"</div> " +
-				"</div> " +
-
-				"<div class='w3-row' style='margin-top: 10px;'>" +
-				"<div class='w3-col l6 m6 s6' style='padding-top: 10px;'>" +
-				"<div class='w3-row'>" +
-				"<div class='w3-col l6 m6 s6'>" +
-				"<label class='user circel icon'> " +
-				"<input id='male' class='with-gap' name='gender' type='radio' "+(checkin.guest.sex != null ? (checkin.guest.sex != "female" ? 'checked' : '') : 'checked')+"/>" +
-				"<span>Male</span>" +
-				"</label>" +
-				"</div>" +
-				"<div class='w3-col l6 m6 s6'>" +
-				"<label class='user circle icon'> " +
-				"<input id='' class='with-gap' name='gender' type='radio' "+(checkin.guest.sex != null ? (checkin.guest.sex == "female" ? 'checked' : '') : '')+"/>" +
-				"<span>Female</span>" +
-				"</label>" +
-				"</div>" +
-				"</div>" +
-				"</div> " +
-				"<div class='w3-col l6 m6 s6'>" +
-				"<div class=''>" +
-				"<div class='ui fluid left icon input'>" +
-				"<i class='calendar alternate icon'></i>" +
-				"<input id='dob' class='wix-textbox' value='"+(checkin.guest.dob != null ? checkin.guest.dob : '')+"' placeholder='Date of birth' type='text'/>" +
-				"</div>" +
-				"</div>" +
-				"</div> " +
-				"</div> " +
-
-				"<div class='w3-row' style='margin-top: 10px;'>" +
-				"<div class='w3-col l4 m4 s12'>" +
-				"<div class='l-width-xl'>" +
-				countryDropdown() +
-				"</div>" +
-				"</div> " +
-				"<div class='w3-col l4 m4 s12'>" +
-				"<div class='l-width-xl'>" +
-				"<div class='ui fluid left icon input'>" +
-				"<i class='map marker icon'></i>" +
-				"<input id='guest-state' value='"+(checkin.guest.state != null ? checkin.guest.state : '')+"' class='wix-textbox' placeholder='State' type='text'/>" +
-				"</div>" +
-				"</div>" +
-				"</div> " +
-				"<div class='w3-col l4 m4 s12'>" +
-				"<div class=''>" +
-				"<div class='ui fluid left icon input'>" +
-				"<i class='map icon'></i>" +
-				"<input id='guest-city' value='"+(checkin.guest.city != null ? checkin.guest.city : '')+"' class='wix-textbox' placeholder='City' type='text'/>" +
-				"</div>" +
-				"</div>" +
-				"</div> " +
-				"</div> " +
-
-
-
-				"<div class='ui fluid form' style='margin-top: 10px;'>" +
-				"<textarea id='guest-address' class='wix-textbox' rows='3' placeholder='Address'>"+(checkin.guest.address != null ? checkin.guest.address : '')+"</textarea>" +
-				"</div>" +
-
-				"<hr/>" +
-
-				"<div>" +
-				"<div class='w3-row'>" +
-				"<div class='w3-col l6 m6 s6'>" +
-				"<div class='l-width-l'> " +
-				"<div class='ui fluid labeled input'>" +
-				"<label class='ui label' style='font-family: Nunito, quicksandregular, serif;'>Adults</label>" +
-				"<input id='adult-count' type='number' min='1' value='1'/> " +
-				"</div> " +
-				"</div> " +
-				"</div> " +
-				"<div class='w3-col l6 m6 s6'>" +
-				"<div class='ui fluid labeled input'>" +
-				"<label class='ui label' style='font-family: Nunito, quicksandregular, serif;'>Children</label>" +
-				"<input id='children-count' type='number' value='0'/> " +
-				"</div> " +
-				"</div> " +
-				"</div>" +
-
-				"</div>" +
-				"</div>";
-			getElement("guest-info-page").appendChild(d);
-
-			$("#country").dropdown('set selected', (checkin.guest.country != null ? checkin.guest.country : ''));
-
+			// add now
+			addGuestInformation();
 
 			let t = document.createElement("div");
 			t.className = "pad-2";
@@ -5468,24 +5358,39 @@
 				"<div class=''>" +
 				"<button class='ui sleak button' onclick=\"moveFormTo('rooms')\">Back</button>" +
 				"<button id='billing-btn' class='ui sleak blue button' onclick=\"moveFormTo('billing', true)\">Next</button>" +
-				"</div> " +
+				"</div>" +
 				"</div>";
 
-				getElement("action-btn-page").appendChild(t);
+			getElement("action-btn-page").appendChild(t);
 
-			$("#country").dropdown();
+			$("#guests").hide();
 
-			var dob = new Lightpick({
-				field: document.getElementById('dob'),
-				singleDate: true,
-				inline:false,
-				format:"MM/DD/YY",
-				numberOfColumns:1,
-				numberOfMonths:1,
-				onSelect: function(date){
+			// find customers
+			if (customersJson === null)
+			{
+				postJson('hms-admin/worker', function(data){
+
+					var json = JSON.parse(data);
+
+					if (json.Status == 'success') {
+						customersJson = json.Data;
+						loadGuestDropdown();
+					}
 					
-				}
-			});
+				}, {
+					job : 'get tripmata customers',
+					item_type : 'frontdesk_item',
+					searchterm : '',
+					filter : 'all',
+					Perpage : 100000,
+					Page : '1'
+				});
+			}
+			else
+			{
+				loadGuestDropdown();
+			}
+			
 		}
 		else
 		{
@@ -5495,6 +5400,220 @@
 			}
 		}
 	}
+
+	// add guest information
+	function addGuestInformation(reRenderDropdown = true)
+	{
+		let d = document.createElement("div");
+		d.innerHTML =
+			"<div>" +
+
+			"<div class='w3-row l-pad-2 m-pad-1' style='background-color: rgb(250,250,250);'>" +
+			"<div class='w3-col l1 m2 s3'>" +
+			"<h3 style='color: dimgray;'>" +
+			"<i class='la la-user green-text la-2x' style='vertical-align: middle;'></i>" +
+			"</h3>" +
+			"</div>" +
+			"<div class='w3-col l11 210 s9 guest-info-header'>" +
+			"<h3 style='color: dimgray; margin-top: 7px; font-family: varela_roundregular; font-weight: normal;'>" +
+			"Guest info" +
+			"</h3>" +
+			"<div id='guest-dropdown-wrapper'>" + guestDropdown() + "</div>" +
+			"</div>" +
+			"</div>" +
+
+			"<div class='l-pad-2 m-pad-1'>" +
+			"<div class='w3-row'>" +
+			"<div class='w3-col l6 m6 s12'>" +
+			"<div class='l-width-xl'>" +
+			"<div class='ui fluid left icon input'>" +
+			"<i class='user circel icon'></i> " +
+			"<input id='guest-name' class='wix-textbox' value='"+(checkin.guest.name != null ? checkin.guest.name : '')+"' placeholder='Name' type='text'/>" +
+			"</div>" +
+			"</div>" +
+			"</div> " +
+			"<div class='w3-col l6 m6 s12'>" +
+			"<div class=''>" +
+			"<div class='ui fluid left icon input'>" +
+			"<i class='icon'></i>" +
+			"<input id='guest-surname' class='wix-textbox' value='"+(checkin.guest.surname != null ? checkin.guest.surname : '')+"' placeholder='Surname' type='text'/>" +
+			"</div>" +
+			"</div>" +
+			"</div> " +
+			"</div> " +
+
+			"<div class='w3-row' style='margin-top: 10px;'>" +
+			"<div class='w3-col l4 m4 s12'>" +
+			"<div class='l-width-xl'>" +
+			"<div class='ui fluid left icon input'>" +
+			"<i class='mobile icon'></i> " +
+			"<input id='guest-phone' class='wix-textbox'  value='"+(checkin.guest.phone != null ? checkin.guest.phone : '')+"' placeholder='Phone' type='text'/>" +
+			"</div>" +
+			"</div>" +
+			"</div> " +
+			"<div class='w3-col l8 m8 s12'>" +
+			"<div class=''>" +
+			"<div class='ui fluid left icon input'>" +
+			"<i class='at icon'></i>" +
+			"<input id='guest-email' class='wix-textbox' value='"+(checkin.guest.email != null ? checkin.guest.email : '')+"' placeholder='Email' type='text'/>" +
+			"</div>" +
+			"</div>" +
+			"</div> " +
+			"</div> " +
+
+			"<div class='w3-row' style='margin-top: 10px;'>" +
+			"<div class='w3-col l6 m6 s6' style='padding-top: 10px;'>" +
+			"<div class='w3-row'>" +
+			"<div class='w3-col l6 m6 s6'>" +
+			"<label class='user circel icon'> " +
+			"<input id='male' class='with-gap' name='gender' type='radio' "+(checkin.guest.sex != null ? (checkin.guest.sex != "female" ? 'checked' : '') : 'checked')+"/>" +
+			"<span>Male</span>" +
+			"</label>" +
+			"</div>" +
+			"<div class='w3-col l6 m6 s6'>" +
+			"<label class='user circle icon'> " +
+			"<input id='' class='with-gap' name='gender' type='radio' "+(checkin.guest.sex != null ? (checkin.guest.sex == "female" ? 'checked' : '') : '')+"/>" +
+			"<span>Female</span>" +
+			"</label>" +
+			"</div>" +
+			"</div>" +
+			"</div> " +
+			"<div class='w3-col l6 m6 s6'>" +
+			"<div class=''>" +
+			"<div class='ui fluid left icon input'>" +
+			"<i class='calendar alternate icon'></i>" +
+			"<input id='dob' class='wix-textbox' value='"+(checkin.guest.dob != null ? checkin.guest.dob : '')+"' placeholder='Date of birth' type='text'/>" +
+			"</div>" +
+			"</div>" +
+			"</div> " +
+			"</div> " +
+
+			"<div class='w3-row' style='margin-top: 10px;'>" +
+			"<div class='w3-col l4 m4 s12'>" +
+			"<div class='l-width-xl'>" +
+			countryDropdown() +
+			"</div>" +
+			"</div> " +
+			"<div class='w3-col l4 m4 s12'>" +
+			"<div class='l-width-xl'>" +
+			"<div class='ui fluid left icon input'>" +
+			"<i class='map marker icon'></i>" +
+			"<input id='guest-state' value='"+(checkin.guest.state != null ? checkin.guest.state : '')+"' class='wix-textbox' placeholder='State' type='text'/>" +
+			"</div>" +
+			"</div>" +
+			"</div> " +
+			"<div class='w3-col l4 m4 s12'>" +
+			"<div class=''>" +
+			"<div class='ui fluid left icon input'>" +
+			"<i class='map icon'></i>" +
+			"<input id='guest-city' value='"+(checkin.guest.city != null ? checkin.guest.city : '')+"' class='wix-textbox' placeholder='City' type='text'/>" +
+			"</div>" +
+			"</div>" +
+			"</div> " +
+			"</div> " +
+
+			"<div class='ui fluid form' style='margin-top: 10px;'>" +
+			"<textarea id='guest-address' class='wix-textbox' rows='3' placeholder='Address'>"+(checkin.guest.address != null ? checkin.guest.address : '')+"</textarea>" +
+			"</div>" +
+
+			"<hr/>" +
+
+			"<div>" +
+			"<div class='w3-row'>" +
+			"<div class='w3-col l6 m6 s6'>" +
+			"<div class='l-width-l'> " +
+			"<div class='ui fluid labeled input'>" +
+			"<label class='ui label' style='font-family: Nunito, quicksandregular, serif;'>Adults</label>" +
+			"<input id='adult-count' type='number' min='1' value='1'/> " +
+			"</div> " +
+			"</div> " +
+			"</div> " +
+			"<div class='w3-col l6 m6 s6'>" +
+			"<div class='ui fluid labeled input'>" +
+			"<label class='ui label' style='font-family: Nunito, quicksandregular, serif;'>Children</label>" +
+			"<input id='children-count' type='number' value='0'/> " +
+			"</div> " +
+			"</div> " +
+			"</div>" +
+
+			"</div>" +
+			"</div>";
+
+		getElement("guest-info-page").appendChild(d);
+
+		$("#country").dropdown('set selected', (checkin.guest.country != null ? checkin.guest.country : ''));
+
+
+		$("#country").dropdown();
+
+		var dob = new Lightpick({
+			field: document.getElementById('dob'),
+			singleDate: true,
+			inline:false,
+			format:"MM/DD/YY",
+			numberOfColumns:1,
+			numberOfMonths:1,
+			onSelect: function(date){
+				
+			}
+		});
+
+	}
+
+	// load guest dropdown
+	function loadGuestDropdown()
+	{
+		$("#guest-dropdown-wrapper").html(guestDropdown(customersJson));
+		$("#guests").dropdown();
+
+		// call guest search dropdown
+		guestSearchDropdown(populateGuestInfo);
+	}
+
+	// populate guest information
+	function populateGuestInfo(val){
+
+		// set id
+		var id = 0;
+
+		// get customer info from id
+		for (id in customersJson)
+		{
+			if (customersJson[id].Id == val)
+			{
+				// get customer information
+				var customer = customersJson[id];
+
+				// update
+				checkin.guest.name = customer.Name;
+				checkin.guest.surname = customer.Surname;
+				checkin.guest.phone = customer.Phone;
+				checkin.guest.email = customer.Email;
+				checkin.guest.sex = customer.Sex;
+				checkin.guest.dob = customer.DOB;
+				checkin.guest.state = customer.State;
+				checkin.guest.city = customer.City;
+				checkin.guest.country = customer.Country;
+				checkin.guest.address = customer.Address;
+
+
+				// clean up
+				$("#guest-info-page").html("");
+				
+				// add now
+				addGuestInformation();
+
+				// load guest dropdown
+				$("#guest-dropdown-wrapper").html(guestDropdown(customersJson));
+				$("#guests").dropdown();
+				guestSearchDropdown(populateGuestInfo);
+
+				// break out
+				break;
+			}
+		}
+	}
+
 
 	function addBillingInfo()
 	{
@@ -5740,6 +5859,7 @@
 		checkin = {guest:{}, rooms:[], discounts:[], total:0.00};
 
 		emptyTray();
+		removeSelectedCalendarBox();
 
 		$("#checkin-form-inner").transition('fade up out', function () {
 			$("#checkin-dialogue").fadeOut(500, function () {
@@ -5747,12 +5867,60 @@
 			});
 		});
 	}
+
+	function removeSelectedCalendarBox()
+	{
+		let selectedCalendarElements = document.querySelectorAll('.selected-calendar-box');
+
+		// do we have something
+		if (selectedCalendarElements.length > 0)
+		{
+			[].forEach.call(selectedCalendarElements, function(element){
+				element.classList.remove('selected-calendar-box');
+			});
+		}
+	}
+
+	function managePreloader(title, closure)
+	{
+		let cover = document.createElement("div");
+		cover.style.backgroundColor = "rgba(255,255,255,0.9)";
+		cover.style.position = "fixed";
+		cover.style.top = "0px";
+		cover.style.width = "100%";
+		cover.style.height = "100%";
+		cover.style.zIndex = "1000";
+		cover.style.textAlign = "center";
+		cover.id = "loading-cover";
+		cover.innerHTML =
+			"<div style='margin-top: 250px;'>" +
+			"<div id='loading-cover-content' class='l-width-4' style='margin: auto;'> " +
+			"<h1 style='font-weight: normal; font-family: Nunito, quicksandregular, segoe ui;'>" +
+			"<div class='ui inline active loader'></div> " + title +
+			"</h1>" +
+			"</div>" +
+			"</div>";
+
+		document.body.appendChild(cover);
+
+		// complete function
+		this.complete = function(title){
+			$("#loading-cover-content").html("<h1 style='font-family: quicksandregular; font-weight: normal;'>" +
+						"<i class='green check icon'></i> "+title+"</h1>");
+			setTimeout(()=>{
+				document.body.removeChild(cover);
+			},2000);
+		};
+
+		// load closure
+		closure.call(this, cover);
+	}
 	
 	function addRoom()
 	{
 		if(pushed)
 		{
-			emptyTray();
+			emptyTray(); 
 		}
 
 		$("#checkin-form-inner").transition('fade up out', function () {
@@ -5858,8 +6026,6 @@
             }
 		}
 	}
-	
-	
 	
 	
 	//---------------------------  populate tables ----------------------------------------------
@@ -6046,6 +6212,8 @@
 	{
 		let res = null;
 
+		console.log(e, reservations);
+
 		for(let i = 0; i < reservations.length; i++)
 		{
 			if(reservations[i].Id === e)
@@ -6114,8 +6282,8 @@
 					"<h3 style='font-family: Nunito, quicksandregular, serif; font-weight: normal; vertical-align: middle;'>" +
 					"<i class='la la-user blue' style='vertical-align: middle; font-size: 1.6em;'></i> "+
 					res.Customer.Name+" "+res.Customer.Surname+"</h3>" +
-					"<h5 style='margin: 0; padding: 0; font-weight: normal; font-family: Nunito, quicksandregular;'>"+res.Customer.Email+"</h5>" +
-					"<h5 style='margin: 0; margin-top: 10px; padding: 0; font-weight: normal; font-family: Nunito, quicksandregularl'>"+res.Customer.Phone+"</h5>" +
+					"<h5 style='margin: 0; padding: 0; font-weight: normal; font-family: Nunito, quicksandregular;'>"+res.Customer.InternalEmail+"</h5>" +
+					"<h5 style='margin: 0; margin-top: 10px; padding: 0; font-weight: normal; font-family: Nunito, quicksandregularl'>"+res.Customer.Phone.substring(0,5)+"######</h5>" +
 
 					"</div>" +
 					"<div class='w3-col l4 m4 s4'>" +
@@ -6203,7 +6371,7 @@
 					"<i class='la la-user blue' style='vertical-align: middle; font-size: 1.5em;'></i>"+
 					res.Customer.Name+" "+res.Customer.Surname+"</h3>" +
 					"<h5 style='margin: 0; padding: 0; font-weight: normal; font-family: Nunito, quicksandregular;'>"+res.Customer.Email+"</h5>" +
-					"<h5 style='margin: 0; margin-top: 10px; padding: 0; font-weight: normal; font-family: Nunito, quicksandregularl'>"+res.Customer.Phone+"</h5>" +
+					"<h5 style='margin: 0; margin-top: 10px; padding: 0; font-weight: normal; font-family: Nunito, quicksandregularl'>"+res.Customer.Phone.substring(0,5)+"######</h5>" +
 					"</div>" +
 					"</div>" +
 					"<hr/> " +
@@ -6289,6 +6457,7 @@
 				}});
 		}
 	}
+
 	function addPayment(e, modal)
 	{
 		let res = null;
@@ -6369,6 +6538,7 @@
 			}
 		}
 	}
+
 	function buildAddPayment(res, amount, method)
 	{
 		let payment = {};
@@ -6409,7 +6579,6 @@
 		return payment;
 	}
 
-	
 	function checkinReservation(e)
 	{
 		let res = null;
@@ -6457,7 +6626,7 @@
 					"<i class='la la-user blue' style='vertical-align: middle; font-size: 1.6em;'></i> "+
 					res.Customer.Name+" "+res.Customer.Surname+"</h3>" +
 					"<h5 style='margin: 0; padding: 0; font-weight: normal; font-family: Nunito, quicksandregular;'>"+res.Customer.Email+"</h5>" +
-					"<h5 style='margin: 0; margin-top: 10px; padding: 0; font-weight: normal; font-family: Nunito, quicksandregularl'>"+res.Customer.Phone+"</h5>" +
+					"<h5 style='margin: 0; margin-top: 10px; padding: 0; font-weight: normal; font-family: Nunito, quicksandregularl'>"+res.Customer.Phone.substring(0,5)+"######</h5>" +
 
 					"</div>" +
 					"<div class='w3-col l4 m4 s4'>" +
@@ -6502,7 +6671,6 @@
 					"<i class='calendar alternate outline icon'></i> Check in" +
 					"</button> " +
 					"</div>");
-
 
 					let rooms = "";
 
@@ -6673,6 +6841,7 @@
 			}
 		}
 	}
+
 	function buildCheckinFromReserve(res, rooms, paid, method)
 	{
 		let booking = {};
@@ -6755,6 +6924,7 @@
 			}, null, null, e);
 		}
 	}
+
 	function cancelReservation(e)
 	{
 		let cancel = buildCancellation(e);
@@ -6779,6 +6949,7 @@
 			}
 		}
 	}
+
 	function buildCancellation(e)
 	{
 		let noshow = {};
@@ -6820,6 +6991,7 @@
 			}, null, null, e);
 		}
 	}
+
 	function markNoShow(e)
 	{
 		let nShow = buildNoSHow(e);
@@ -6839,6 +7011,7 @@
 			populateReservationsSummary();
 		}
 	}
+
 	function buildNoSHow(e)
 	{
 		let noshow = {};
@@ -6853,9 +7026,6 @@
 
 		return noshow;
 	}
-
-
-
 
 	function reBuildReservationRow(e)
 	{
@@ -7104,7 +7274,6 @@
 			}
 		}
 	}
-
 
 	function populateReservationsSummary_1()
 	{
@@ -7460,6 +7629,104 @@
 			"</div>";
 
 		return country_dropdown;
+	}
+
+	function guestDropdown(customers=null)
+	{
+		return "<div id='guests' class='ui search fluid selection dropdown'>" +
+			"  <input type='hidden' name='guests'>" +
+			"  <i class='dropdown icon'></i>" +
+			"  <div class='default text'>Search for a guest</div>" +
+			"  <div class='menu guests-list'>" +
+			(function(){
+
+				var customerList = '<div class="item" data-value="">Search for a guest</div>';
+
+				// if json passeed
+				if (customers !== null)
+				{
+					customers.forEach(function(e){
+						customerList += '<div class="item" data-value="'+e.Id+'">'+(e.Name + ' ' + e.Surname)+'</div>';
+					});
+				}
+
+				return customerList + "</div>" +
+				"</div>";
+			}());
+			
+	}
+
+	function guestSearchDropdown(callback)
+	{
+		$('#guests > .search').keyup(function(e){
+							
+			if (e.target.value != '') 
+			{
+				// @var array newJsonList
+				var newJsonList = [];
+
+				// check from the json list
+				customersJson.forEach(function(customer){
+					
+					// trim
+					e.target.value = e.target.value.trim();
+
+					// reg xp
+					var reg = new RegExp("("+e.target.value+")", 'gi');
+
+					if (e.target.value.match(/^[\+|0-9]/))
+					{
+						// check phone
+						if (customer.Phone.match(reg))
+						{
+							newJsonList.push(customer);
+						}
+					}
+					else
+					{
+						// check name, surname, and email
+						if (customer.Name.match(reg) || customer.Surname.match(reg) || customer.Email.match(reg))
+						{
+							newJsonList.push(customer);
+						}
+					}
+					
+				});
+
+				// add to list
+				if (newJsonList.length > 0)
+				{
+					$('#guests > .guests-list').html((function(){
+						// @var string html
+						var html = '';
+
+						// get items
+						newJsonList.forEach(function(e){
+							html += '<div class="item" data-value="'+e.Id+'">'+(e.Name + ' ' + e.Surname)+'</div>';
+						});
+
+						// return string
+						return html;
+
+					}()));
+				}
+				
+			}
+			else
+			{
+				$("#guest-dropdown-wrapper").html(guestDropdown(customersJson));
+				$("#guests").dropdown();
+
+				// call dropdown
+				guestSearchDropdown(callback);
+			}
+		});
+
+
+		// listen for change event
+		$('#guests').change(function(){
+			callback.call(this, $('#guests > input[name="guests"]').val());
+		});
 	}
 
 	//Operation completion
@@ -8215,6 +8482,7 @@
 		{
 			request.filter = "abandoned";
 		}
+		
 
 		let t = new Date();
 		let today = new Date(t.getFullYear(), t.getMonth(), t.getDate());
@@ -8300,8 +8568,7 @@
 
 						let td5 = document.createElement("td");
 						td5.style.lineHeight = "170%";
-						td5.innerHTML = ((d.Data[i].Noshow) ? "<span class='status red-back'>No show</span>" : "<span class='status yellow-back'>Pending</span>");
-
+						td5.innerHTML = ((d.Data[i].Noshow == 1) ? "<span class='status red-back'>No show</span>" : (d.Data[i].Checkedin == true ? "<span class='green status'>Checked in</span>" : "<span class='status yellow-back'>Pending</span>"));
 						let td6 = document.createElement("td");
 
 						if(d.Data[i].Noshow)
@@ -8310,24 +8577,38 @@
 						}
 						else
 						{
-							td6.innerHTML = "<div class='w3-container'> " +
-								"<div id='" + d.Data[i].Id + "-btn' class='ui icon top right pointing dropdown button c-menu s-float-r'>" +
-								"<i class='blue wrench icon'></i>" +
-								"<div class='menu'>" +
-								"<div class='header'>Action</div>" +
-								"<div class='item' onclick=\"showReservationDetails('" + d.Data[i].Id + "')\"><i class='eye blue icon'></i>See details</div>" +
-								"<div class='ui divider'></div>" +
-								((wxDateToTime(d.Data[i].Checkoutdate) > today.getTime()) ?
-								"<div class='item' onclick=\"acceptPayment('" + d.Data[i].Id + "')\"><i class='money green icon'></i>Accept payment</div>" : "") +
-								(((wxDateToTime(d.Data[i].Checkindate) <= today.getTime()) && (wxDateToTime(d.Data[i].Checkoutdate) > today.getTime())) ?
-								"<div class='item' onclick=\"checkinReservation('" + d.Data[i].Id + "')\"><i class='check green icon'></i>Check in</div>" +
-									"<div class='ui divider'></div>" : "") +
-
-								"<div class='item' onclick=\"confirmMarkNoShow('" + d.Data[i].Id + "')\"><i class='calendar red outline alternate times icon'></i>Mark no-show</div>" +
-								(((wxDateToTime(d.Data[i].Checkoutdate) > today.getTime())) ?
-								"<div class='item' onclick=\"confirmCancelReservation('" + d.Data[i].Id + "')\"><i class='trash red icon'></i>Cancel reservation</div>" : "") +
-								"</div>" +
-								"</div></div>";
+							if (d.Data[i].Checkedin == true)
+							{
+								td6.innerHTML = "<div class='w3-container'> " +
+									"<div id='" + d.Data[i].Id + "-btn' class='ui icon top right pointing dropdown button c-menu s-float-r'>" +
+									"<i class='blue wrench icon'></i>" +
+									"<div class='menu'>" +
+									"<div class='header'>Action</div>" +
+									"<div class='item' onclick=\"showReservationDetails('" + d.Data[i].Id + "')\"><i class='eye blue icon'></i>See details</div>" +
+									"</div>" +
+									"</div></div>";
+							}
+							else
+							{
+								td6.innerHTML = "<div class='w3-container'> " +
+									"<div id='" + d.Data[i].Id + "-btn' class='ui icon top right pointing dropdown button c-menu s-float-r'>" +
+									"<i class='blue wrench icon'></i>" +
+									"<div class='menu'>" +
+									"<div class='header'>Action</div>" +
+									"<div class='item' onclick=\"showReservationDetails('" + d.Data[i].Id + "')\"><i class='eye blue icon'></i>See details</div>" +
+									"<div class='ui divider'></div>" +
+									((wxDateToTime(d.Data[i].Checkoutdate) > today.getTime()) ?
+									"<div class='item' onclick=\"acceptPayment('" + d.Data[i].Id + "')\"><i class='money green icon'></i>Accept payment</div>" : "") +
+									(((wxDateToTime(d.Data[i].Checkindate) <= today.getTime()) && (wxDateToTime(d.Data[i].Checkoutdate) > today.getTime())) ?
+									"<div class='item' onclick=\"checkinReservation('" + d.Data[i].Id + "')\"><i class='check green icon'></i>Check in</div>" +
+										"<div class='ui divider'></div>" : "") +
+									((today.getTime() >= wxDateToTime(d.Data[i].Checkindate)) ?
+									"<div class='item' onclick=\"confirmMarkNoShow('" + d.Data[i].Id + "')\"><i class='calendar red outline alternate times icon'></i>Mark no-show</div>" : "") +
+									(((wxDateToTime(d.Data[i].Checkoutdate) > today.getTime())) ?
+									"<div class='item' onclick=\"confirmCancelReservation('" + d.Data[i].Id + "')\"><i class='trash red icon'></i>Cancel reservation</div>" : "") +
+									"</div>" +
+									"</div></div>";
+							}
 						}
 
 						row.appendChild(td0);
@@ -8653,7 +8934,7 @@
 
 						let td1 = document.createElement("td");
 						td1.style.textAlign = "center";
-						td1.innerHTML = "<img src='"+((d.Data[i].Profilepic == "") ? cdn+"images/manager.svg" : "https://tripmata.com/files/" + d.Data[i].Profilepic)+"' style='width: 50px;'/>";
+						td1.innerHTML = "<img src='"+((d.Data[i].Profilepic == "") ? cdn+"images/manager.svg" : cdn +"../files/" + d.Data[i].Profilepic)+"' style='width: 50px;'/>";
 
 						let td2 = document.createElement("td");
 						td2.style.lineHeight = "170%";
@@ -8663,8 +8944,8 @@
 
 						let td3 = document.createElement("td");
 						td3.style.lineHeight = "170%";
-						td3.innerHTML = "<span style='color: silver;'>Phone:</span> "+ d.Data[i].Phone+
-							"<br/><span style='color: silver;'>Email </span> "+ d.Data[i].Email;
+						td3.innerHTML = "<span style='color: silver;'>Phone:</span> "+ d.Data[i].Phone.substring(0,5) + '######'+
+							"<br/><span style='color: silver;'>Email </span> "+ d.Data[i].InternalEmail;
 
 
 						let td4 = document.createElement("td");
@@ -8793,12 +9074,12 @@
 						"<div style='max-width: 250px;'>" +
 						"<div class=''>" +
 						"<div class='' style='max-width: 100px; ='>" +
-						"<img src='"+(d.Data.Profilepic == "" ? cdn+"images/manager.svg" : "http://localhost/tripmata/files"+d.Data.Profilepic)+"' style='max-width: 100%;'/>" +
+						"<img src='"+(d.Data.Profilepic == "" ? cdn+"images/manager.svg" : cdn + "../files/"+d.Data.Profilepic)+"' style='max-width: 100%;'/>" +
 						"</div>" +
 						"<div class='ui wide line'></div> " +
 						"<h3 style='font-weight: normal; margin: 0; margin-top: 5px; font-family: Nunito;'><span style='color: silver;'>Name: </span>"+d.Data.Name+" "+d.Data.Surname+"</h3> " +
-						"<h4 style='font-family: Nunito; margin: 0; margin-top: 5px;'><span style='color: silver;'>Email: </span>"+d.Data.Email+"</h4> " +
-						"<h4 style='font-family: Nunito; margin: 0; margin-top: 5px;'><span style='color: silver;'>Phone: </span>"+d.Data.Phone+"</h4>" +
+						"<h4 style='font-family: Nunito; margin: 0; margin-top: 5px;'><span style='color: silver;'>Email: </span>"+d.Data.InternalEmail+"</h4> " +
+						"<h4 style='font-family: Nunito; margin: 0; margin-top: 5px;'><span style='color: silver;'>Phone: </span>"+d.Data.Phone.substring(0,5)+"######</h4>" +
 						"<br/> " +
 						"<h4 style='font-family: Nunito; margin: 0; margin-top: 5px;'><span style='color: silver;'>City: </span>"+d.Data.City+"</h4> " +
 						"<h4 style='font-family: Nunito; margin: 0; margin-top: 5px;'><span style='color: silver;'>State: </span>"+d.Data.State+"</h4>" +

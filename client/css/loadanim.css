@@ -1,0 +1,14 @@
+
+.load1{
+		animation-name: drive;
+		animation-duration: 3s;
+		animation-timing-function: ease-in-out;
+		animation-iteration-count: infinite;
+		animation-fill-mode: both;
+		animation-direction: forward;
+	}
+	
+	@keyframes drive{
+		0%{transform: translateX(0px)}
+		100%{transform: translateX(100%);}
+	}

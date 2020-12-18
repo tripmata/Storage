@@ -4132,8 +4132,6 @@ function savePrivacyPolicy()
             i++;
         }
 
-        console.log(request);
-
         if(request.images.length === 0)
         {
             ShowModal("Add at least one image of the room category");
