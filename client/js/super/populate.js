@@ -1355,7 +1355,7 @@
 					{
 						$("#table-body").html("<div class='align-c widget curve pad-2'>" +
 							"<img src='"+host+"cdn/images/icons/pastel/empty_box.png' style='width: 60px;'/>" +
-							"<h6 class='sleak-b' style='color: dimgray;'>Message template list is empty returned</h6>" +
+							"<h6 class='sleak-b' style='color: dimgray;'>Message template list is empty</h6>" +
 							"</div>");
 					}
 

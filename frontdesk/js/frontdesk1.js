@@ -120,12 +120,12 @@
 		else
 		{
 			loadingButton({btn:"coupon_btn"});
-			postJson("hms-pos/worker", function(data, status){
+			postJson(url.main+"hms-pos/worker", function(data, status){
 				loadingButton({btn:"coupon_btn", loading:false});
 				if(status === "done")
 				{
 					let d = JSON.parse(data);
-
+ 
 					if(d.Status === "success")
 					{
 						let found = false;
@@ -476,7 +476,7 @@
 
 	function loadItemList(func)
 	{
-		postJson("hms-pos/worker", function(data, status){
+		postJson(url.main+"hms-pos/worker", function(data, status){
 			if(status === "done")
 			{
 				let d = JSON.parse(data);
@@ -508,7 +508,7 @@
 
 	function loadPOSSettings(func)
 	{
-		postJson("hms-pos/worker", function(data, status){
+		postJson(url.main+"hms-pos/worker", function(data, status){
 			if(status === "done")
 			{
 				let d = JSON.parse(data);
@@ -540,7 +540,7 @@
 
 	function loadPOSDiscount(func)
 	{
-		postJson("hms-pos/worker", function(data, status){
+		postJson(url.main+"hms-pos/worker", function(data, status){
 			if(status === "done")
 			{
 				let d = JSON.parse(data);
@@ -572,7 +572,7 @@
 
 	function loadPOSReceipt(func)
 	{
-		postJson("hms-pos/worker", function(data, status){
+		postJson(url.main+"hms-pos/worker", function(data, status){
 			if(status === "done")
 			{
 				let d = JSON.parse(data);
@@ -680,7 +680,7 @@
 			$("#"+o.transId+"-status").html("<i class='red circle notch loading icon'></i> processing");
 		}
 
-		postJson("hms-pos/worker", function(data, status){
+		postJson(url.main+"hms-pos/worker", function(data, status){
 			if(status === "done")
 			{
 				let d = JSON.parse(data);
@@ -817,7 +817,7 @@
 
 	function fetchWebOrder(o)
 	{
-		postJson("hms-pos/worker", function(data, status){
+		postJson(url.main+"hms-pos/worker", function(data, status){
 			if(status === "done")
 			{
 				let d = JSON.parse(data);
@@ -990,7 +990,7 @@
 
 		$("#table-body").html(tableLoader(6));
 
-		postJson("hms-pos/worker", function(data, status){
+		postJson(url.main+"hms-pos/worker", function(data, status){
 			$("#table-body").html("");
 			if(status == "done")
 			{
@@ -1132,7 +1132,7 @@
 			"<div class='line'></div>" +
 			"</div>");
 
-		postJson("hms-pos/worker", function (data, status) {
+		postJson(url.main+"hms-pos/worker", function (data, status) {
 			$("#transaction-detail-con").html("");
 			if(status === "done")
 			{
@@ -1268,7 +1268,7 @@
 		else
 		{
 			loadingButton({btn:"t-payment-btn"});
-			postJson("hms-pos/worker", function(data, status){
+			postJson(url.main+"hms-pos/worker", function(data, status){
 				loadingButton({btn:"t-payment-btn", loading:false});
 				if(status === "done")
 				{
@@ -1308,14 +1308,14 @@
 			job:"add refund"
 		};
 
-		if(!request.amount)
+		if (!request.amount)
 		{
 			errorButton({btn:"t-refund-btn", msg:"Invalid amount"});
 		}
 		else
 		{
 			loadingButton({btn:"t-refund-btn"});
-			postJson("hms-pos/worker", function(data, status){
+			postJson(url.main+"hms-pos/worker", function(data, status){
 				loadingButton({btn:"t-refund-btn", loading:false});
 				if(status === "done")
 				{
@@ -1351,7 +1351,7 @@
 		loadPageModal({size:"ms", onLoaded:function(m){
 				$("#modal_"+m.modal+"-inner").html("<div id='pos-report-con'></div>");
 				loadPOSAnalytics("today");
-			}});
+		}});
 	}
 
 	function loadPOSAnalytics(day)
@@ -1366,7 +1366,7 @@
 			"</div>" +
 			"</div>");
 
-		postJson("hms-pos/worker", function(data, status){
+		postJson(url.main+"hms-pos/worker", function(data, status){
 			$("#pos-report-con").html("");
 			if(status === "done")
 			{
@@ -1540,7 +1540,6 @@
 		entity.name = "";
 		entity.type = "";
 	}
-
 
 
 	//-------------------------------- Saved order logic --------------------------------------------------------
@@ -1793,7 +1792,7 @@
 				content = "";
 				for(let i = 0; i < discounts.length; i++)
 				{
-					if(!discounts[i].Autoapply)
+					if(!discounts[i].Autoapply && discounts[i].PaymentMode == false)
 					{
 						content +=
 							"<div class='pad-2 w3-row hoverable' " +
@@ -1839,14 +1838,13 @@
 
 	function applyDiscount(e, m)
 	{
-		if(pushed === true)
+		if (pushed === true)
 		{
 			emptyTray();
 		}
 
 		let d = null;
-
-		for(let i = 0; i < discounts.length; i++)
+		for (let i = 0; i < discounts.length; i++)
 		{
 			if(discounts[i].Id === e)
 			{
@@ -1856,7 +1854,7 @@
 		}
 
 		let found = false;
-		for(let i = 0; i < addedDiscount.length; i++)
+		for (let i = 0; i < addedDiscount.length; i++)
 		{
 			if(d.Id == addedDiscount[i].Id)
 			{
@@ -1864,7 +1862,7 @@
 			}
 		}
 
-		if(!found)
+		if (!found)
 		{
 			addedDiscount.push(d);
 
@@ -1895,6 +1893,8 @@
 		{
 			emptyTray();
 		}
+
+		if (discountAdded) discountAdded = false;
 
 		for(let i = 0; i < addedDiscount.length; i++)
 		{
@@ -2867,8 +2867,10 @@
 			numberOfMonths:1,
 			onSelect: function(date){
 				let d = new Date(date);
-				drawCalendar(d.getTime());
-			}
+				drawCalendar(d.getTime(), date);
+			}, 
+		
+
 		});
 
 		if(getElement("calendar-span").value === "")
@@ -2879,7 +2881,7 @@
 		}
 	}
 
-	function drawCalendar(date)
+	function drawCalendar(date, dateValue = '')
 	{
 		getElement("large-calendar").innerHTML = "";
 
@@ -2890,8 +2892,10 @@
 			strip.dispose();
 		}
 
+
 		strip = new Bookingstrip(getElement("large-calendar"), date, 'Month', 'PILLS');
-		strip.addAvailbilityStrip();
+		strip.addAvailbilityStrip(roomsList, reservations, date);
+		strip.setAvailableRooms()
 
 		if(roomsList.length > 0)
 		{
@@ -3097,8 +3101,6 @@
 			}
 		}
 
-		console.log(rooms, roomsList);
-
 		if(typeof (rooms) === "object")
 		{
 			let nf = false;
@@ -3143,8 +3145,6 @@
 
 		return ret;
 	}
-
-
 
 	function drawCheckout()
 	{
@@ -3222,7 +3222,14 @@
 			"    <div class='item'>" +
 			"      <div class='ui transparent icon input'>" +
 			"        <input id='departure-due-date' type='text' data-toggle='datepicker' " +
-			"             placeholder='Select due date' onchange='populateInHouseTable; ehChange()'>" +
+			"             placeholder='Date from' onchange='populateInHouseTable();'>" +
+			"        <i id='reservation-cancel-btn' class='blue calendar alternate outline icon' onclick='cancelDate()'></i>" +
+			"      </div>" +
+			"    </div>" +
+			"    <div class='item'>" +
+			"      <div class='ui transparent icon input'>" +
+			"        <input id='departure-due-date-range' type='text' data-toggle='datepicker' " +
+			"             placeholder='Date to' onchange='populateInHouseTable();'>" +
 			"        <i id='reservation-cancel-btn' class='blue calendar alternate outline icon' onclick='cancelDate()'></i>" +
 			"      </div>" +
 			"    </div>" +
@@ -3231,7 +3238,7 @@
 			"      <div class='ui transparent icon input'>" +
 			"        <input id='search-txt' type='text' placeholder='Search...' " +
 			"         onkeyup='if(event.keyCode == 13){populateInHouseTable();}'/>" +
-			"        <i class='search link icon'></i>" +
+			"        <i class='search link icon' onclick='populateInHouseTable()'></i>" +
 			"      </div>" +
 			"    </div>" +
 			"  </div>" +
@@ -3239,7 +3246,7 @@
 
 			DrawTable(["Booking Detail", "Date", "Bills", "Payment", "Status", "Action"],
 				{
-					Celled: true, Padded: true, GroupAction: [{ Text: "", Method: "ConfGroupOrderDelete" }]
+					Celled: true, Padded: true, GroupAction: [{ Text: "Export CSV", Method: "exportCheckCSV"}]
 				}).outerHTML +
 
 			"</div>" +
@@ -3248,7 +3255,7 @@
 
 		$(".ui.dropdown").dropdown();
 
-		let picker4 = new Lightpick({
+		new Lightpick({
 			field: document.getElementById('departure-due-date'),
 			singleDate: true,
 			inline:false,
@@ -3256,12 +3263,70 @@
 			numberOfColumns:1,
 			numberOfMonths:1,
 			onSelect: function(date){
+				populateInHouseTable();
+			}
+		});
 
+		new Lightpick({
+			field: document.getElementById('departure-due-date-range'),
+			singleDate: true,
+			inline:false,
+			format:"MM/DD/YY",
+			numberOfColumns:1,
+			numberOfMonths:1,
+			onSelect: function(date){
+				populateInHouseTable();
 			}
 		});
 
 		populateInHouseTable();
 	}
+
+	function exportCheckCSV()
+	{
+		let departures = getAllCheckedItems(JSON.parse(localStorage.getItem('departures')), 'In House Guests');
+		if(departures != null && departures.length > 0)
+		{
+			let sn = 0;
+			let departureObject = departures.map(row => {
+				sn += 1;
+				
+				const { Day, MonthName, Year } = row.Checkin;
+				const payment_status = row.Paid ? 'Paid' : 'Unpaid';
+	
+				// Last seen date
+				const lastseenDay = (row.Checkedout) ? row.Checkout.Day : '';
+				const lastseenDMonth = (row.Checkedout) ? row.Checkout.MonthName : '';
+				const lastseenYear = (row.Checkedout) ? row.Checkout.Year : '';
+				const phone = row.Guest.Phone.search("#") > -1 ? '-' : row.Guest.Phone;
+	
+				return { 
+					SN: sn, 
+					Name: `${row.Guest.Name} ${row.Guest.Surname}`, 
+					Phone: phone,
+					Email: row.Guest.Email,
+					Checkedout: row.Checkedout == false ? 'No' : 'Yes', 
+					No_of_rooms: row.Rooms.length, 
+					Adult: row.Adults,
+					Children: row.Children, 
+					Total_amount: row.Total, 
+					Discount: row.Discount,
+					Payment_status: payment_status, 
+					Amt_paid: row.Paidamount, 
+					Bills : parseFloat(row.Bills),
+					Outstanding: parseFloat(row.Total) - (parseFloat(row.Paidamount) + parseFloat(row.Discount)),
+					Check_in_date: `${Day}-${MonthName}-${Year}`,
+					Check_out_date: `${row.Checkout.Day}-${row.Checkout.MonthName}-${row.Checkout.Year}`,
+					Date_last_seen: `${lastseenDay}-${lastseenDMonth}-${lastseenYear}`,
+					Status : row.Checkedout == false ? 'Checked In' : 'Checked Out'
+				};
+			});
+	
+			const csvData = objectToCsv(departureObject);
+			downloadCSV(csvData, 'Guests-'+(new Date).getTime());
+		}
+	}
+
 	function populateDeparture(page)
 	{
 		let start = page == null ? 0 : page;
@@ -3524,6 +3589,30 @@
 			}
 
 			loadPageModal({size:"s",  onLoaded:function(m){
+
+				// ######
+				var phone = res.Guest.Phone, isExpiredOrOverdue = false;
+
+				// check if reservation is expired or overdue
+				if (res.Checkedin)
+				{
+					// build today
+					var date = new Date, today, checkoutDate;
+					today = date.getDate() + '' + date.getMonth() + '' + date.getFullYear();
+
+					// build checkout date
+					checkoutDate = res.Checkout.Day + '' + parseInt(res.Checkout.Month) - 1 + '' + res.Checkout.Year;
+
+					// are we good ?
+					if (parseInt(today) > parseInt(checkoutDate)) isExpiredOrOverdue = true;
+				}
+
+				// hash phone
+				if (res.Checkedout === true || isExpiredOrOverdue === true)
+				{
+					phone = phone.substring(0,5) + '######';
+				}
+
 				$("#modal_"+m.modal+"-inner").html(
 					"<div class='pad-2'>" +
 					"<div class='w3-row'>" +
@@ -3550,7 +3639,7 @@
 					"<i class='la la-user blue' style='vertical-align: middle; font-size: 1.6em;'></i> "+
 					res.Guest.Name+" "+res.Guest.Surname+"</h3>" +
 					"<h5 style='margin: 0; padding: 0; font-weight: normal; font-family: Nunito, quicksandregular;'>"+res.Guest.InternalEmail+"</h5>" +
-					"<h5 style='margin: 0; margin-top: 10px; padding: 0; font-weight: normal; font-family: Nunito, quicksandregularl'>"+res.Guest.Phone.substring(0,5)+"######</h5>" +
+					"<h5 style='margin: 0; margin-top: 10px; padding: 0; font-weight: normal; font-family: Nunito, quicksandregularl'>"+phone+"</h5>" +
 
 					"</div>" +
 					"<div class='w3-col l4 m4 s4'>" +
@@ -3583,6 +3672,7 @@
 			}});
 		}
 	}
+
 	function acceptDeposit(e, category, room)
 	{
 		let res = null;
@@ -3712,10 +3802,11 @@
 						"<button id='add-pay-btn' class='ui blue button' style='font-family: Nunito, quicksandregular; margin-top: 10px;' onclick=\"addDeposit('"+res.Id+"','"+m.modal+"','"+category+"','"+room+"')\">Add payment</button> " +
 						"</div> " +
 						"</div>");
-				}});
+			}});
 		}
 	}
-	function addDeposit(e, modal, category, room)
+
+	function addDeposit(e, modal, category, room, callback=null)
 	{
 		let res = null;
 
@@ -3786,15 +3877,29 @@
 						printReceipt(payment);
 					}
 
-					$("#add-pay-btn").html("<i class='check icon'></i> payment added");
+					var message = (callback != null) ? 'payment submitted' : 'payment added';
+
+					$("#add-pay-btn").html("<i class='check icon'></i> " + message);
 					$("#add-pay-btn").prop("disabled", true);
 					setTimeout(function(){
 						closeGenModal(modal);
+
+						// load callback
+						if (callback != null) callback.call(this);
+
 					}, 1000);
 				}
 			}
 		}
 	}
+
+	function acceptLateCheckOutDeposit(e, modal, category, room)
+	{
+		addDeposit(e, modal, category, room, ()=>{
+			checkOutLodging(e, category, room, true);
+		});
+	}
+
 	function buildAddDeposit(res, amount, method)
 	{
 		let payment = {};
@@ -3830,6 +3935,7 @@
 
 		return payment;
 	}
+
 	function addBill(e, category, room)
 	{
 		let res = null;
@@ -3891,6 +3997,7 @@
 			}});
 		}
 	}
+
 	function processAddBill(e, modal, category, room)
 	{
 		let res = null;
@@ -3961,6 +4068,7 @@
 			}
 		}
 	}
+
 	function buildAddBill(res, item, price, qty)
 	{
 		let bill = {};
@@ -3998,111 +4106,298 @@
 		
 		return bill;
 	}
-	function checkOutLodging(e, category, room)
+
+	function checkOutLodging(e, category, room, skipChecking = false)
 	{
 		let res = null;
 
-		for(let i = 0; i < lodging.length; i++)
+		for (let i = 0; i < lodging.length; i++)
 		{
-			if(lodging[i].Id === e)
+			if (lodging[i].Id === e)
 			{
 				res = lodging[i];
 				break;
 			}
 		}
+
 		if(res === null)
 		{
 			ShowModal("Invalid booking id selected");
 		}
 		else
 		{
-			loadPageModal({size:"s",  onLoaded:function(m){
-				$("#modal_"+m.modal+"-inner").html(
-					"<div class='pad-2'>" +
-					"<div class='w3-row'>" +
+			// @var int isOverDue
+			var isOverDue = 0, roomsLength = res.Rooms.length, today = new Date(), buttonContent = '';
 
-					"<div class='w3-col l8 m8 s8'>" +
-					"<h3 style='font-family: Nunito, quicksandregular; color: dimgray; font-weight: normal;'>" +
-					"<i class='blue la la-calendar-check-o la-2x' style='vertical-align: middle;'></i>" +
-					"<span style='vertical-align: middle'> Check-out</span>" +
-					"</h3>" +
-					"</div> " +
-					"<div class='w3-col l4 m4 s4 align-r'>" +
-					"<h5 style='margin: 0; margin-top: 10px; padding: 0; font-weight: normal; font-family: Nunito, quicksandregularl; font-weight: bold;'>"+
-					res.Bookingnumber+"</h5>" +
-					"</div> " +
-
-					"</div>" +
-					"</div>" +
-
-					"<hr style='margin: 0px; padding: 0px;'/>" +
-
-					"<div id='reservation-con'>" +
-					"<div class='pad-2'  style='padding-top: 10px; padding-bottom: 10px;'>" +
-					"<div class='w3-row'>" +
-					"<div class='w3-col l8 m8 s8'>" +
-					"<h3 style='font-family: Nunito, quicksandregular, serif; font-weight: normal; vertical-align: middle;'>" +
-					"<i class='la la-user blue' style='vertical-align: middle; font-size: 1.6em;'></i> "+
-					res.Guest.Name+" "+res.Guest.Surname+"</h3>" +
-					"<h5 style='margin: 0; padding: 0; font-weight: normal; font-family: Nunito, quicksandregular;'>"+res.Guest.InternalEmail+"</h5>" +
-					"<h5 style='margin: 0; margin-top: 10px; padding: 0; font-weight: normal; font-family: Nunito, quicksandregularl'>"+res.Guest.Phone.substring(0,5)+"######</h5>" +
-
-					"</div>" +
-					"<div class='w3-col l4 m4 s4'>" +
-					"<h4 style='color: dimgray; font-weight: normal;'>Total: &#8358;"+numFormat(((Number(res.Total) - Number(res.Discount)) + Number(res.Bills)).toFixed(2))+"</h4>" +
-					"<h4 style='margin: 0; margin-top: 10px; color: dimgray; font-weight: normal;'>Paid: &#8358;"+numFormat((Number(res.Paidamount)).toFixed(2))+"</h4>" +
-					"</div>" +
-					"</div>" +
-					"</div>" +
-					"<hr/>" +
-
-					"<div class='pad-2' id='checkout-room-list'></div><hr style='margin: 0; padding: 0;'/>" +
-
-					"<div class='pad-2 w3-row'>" +
-					"<div class='w3-col l6 m6 s12'>" +
-					"<h6 style='font-family: Nunito, quicksandregular;'>Subtotal: &#8358;"+numFormat((Number(res.Total) - Number(res.Discount)).toFixed(2))+"</h6>" +
-					"<h6 style='font-family: Nunito, quicksandregular;'>Other bills: &#8358;"+numFormat(Number(res.Bills).toFixed(2))+"</h6>" +
-					"</div>" +
-					"<div class='w3-col l6 m6 s12'>" +
-					"<h6 style='font-family: Nunito, quicksandregular;'>Total: &#8358;"+numFormat(((Number(res.Total) - Number(res.Discount)) + Number(res.Bills)).toFixed(2))+"</h6>" +
-					"<h6 style='font-family: Nunito, quicksandregular;'>Paid: &#8358;"+numFormat(Number(res.Paidamount).toFixed(2))+"</h6>" +
-					"</div>" +
-					"</div>" +
-
-					"<div class='pad-2'> " +
-					"<br/>" +
-					"<label><input id='print-receipt' type='checkbox'/><span>Print receipt</span></label>" +
-					"<br/><br/>" +
-					"<button id='res-checkin-btn' class='ui blue button' onclick=\"checkOutFromLodging('"+res.Id+"','"+m.modal+"','"+category+"','"+room+"')\">" +
-					"<i class='calendar alternate outline icon'></i> Check out" +
-					"</button> " +
-					"</div>");
-
-
-				let content = "";
-
-				for(let i = 0; i < res.Rooms.length; i++)
+			// run loop
+			for (let x = 0; x < roomsLength; x++)
+			{
+				if (!res.Rooms[x].Checkedout && ((wxDateToTime(res.Rooms[x].Checkout).getTime() < today.getTime())))
 				{
-					if((res.Rooms[i].Category.Name === category) && (res.Rooms[i].Number === room))
-					{
-						content +=
-							"<div class='w3-row'>" +
-							"<div class='w3-col l6 m6 s12'>" +
-							"<h6 style='font-family: Nunito, quicksandregular;'><b>Room:</b> "+res.Rooms[i].Category.Name+"</h6>" +
-							"<span>"+res.Rooms[i].Number+"</span>" +
-							"</div>" +
-							"<div class='w3-col l6 m6 s12'>" +
-							"<span style='font-family: Nunito, quicksandregular;'>"+res.Rooms[i].Checkout.WeekDay+", "+
-							res.Rooms[i].Checkout.Day+" "+res.Rooms[i].Checkout.MonthName+" "+res.Checkout.Year+"</span>" +
-							"</div>" +
-							"</div>";
-					}
+					isOverDue += 1;
 				}
-				document.getElementById("checkout-room-list").innerHTML = content;
+			}
 
-			}});
+			// load checkout modal
+			var loadCheckOutModal = ()=>{
+				loadPageModal({size:"s",  onLoaded:function(m){
+					$("#modal_"+m.modal+"-inner").html(
+						"<div class='pad-2'>" +
+						"<div class='w3-row'>" +
+
+						"<div class='w3-col l8 m8 s8'>" +
+						"<h3 style='font-family: Nunito, quicksandregular; color: dimgray; font-weight: normal;'>" +
+						"<i class='blue la la-calendar-check-o la-2x' style='vertical-align: middle;'></i>" +
+						"<span style='vertical-align: middle'> Check-out</span>" +
+						"</h3>" +
+						"</div> " +
+						"<div class='w3-col l4 m4 s4 align-r'>" +
+						"<h5 style='margin: 0; margin-top: 10px; padding: 0; font-weight: normal; font-family: Nunito, quicksandregularl; font-weight: bold;'>"+
+						res.Bookingnumber+"</h5>" +
+						"</div> " +
+
+						"</div>" +
+						"</div>" +
+
+						"<hr style='margin: 0px; padding: 0px;'/>" +
+
+						"<div id='reservation-con'>" +
+						"<div class='pad-2'  style='padding-top: 10px; padding-bottom: 10px;'>" +
+						"<div class='w3-row'>" +
+						"<div class='w3-col l8 m8 s8'>" +
+						"<h3 style='font-family: Nunito, quicksandregular, serif; font-weight: normal; vertical-align: middle;'>" +
+						"<i class='la la-user blue' style='vertical-align: middle; font-size: 1.6em;'></i> "+
+						res.Guest.Name+" "+res.Guest.Surname+"</h3>" +
+						"<h5 style='margin: 0; padding: 0; font-weight: normal; font-family: Nunito, quicksandregular;'>"+res.Guest.InternalEmail+"</h5>" +
+						"<h5 style='margin: 0; margin-top: 10px; padding: 0; font-weight: normal; font-family: Nunito, quicksandregularl'>"+res.Guest.Phone.substring(0,5)+"######</h5>" +
+
+						"</div>" +
+						"<div class='w3-col l4 m4 s4'>" +
+						"<h4 style='color: dimgray; font-weight: normal;'>Total: &#8358;"+numFormat(((Number(res.Total) - Number(res.Discount)) + Number(res.Bills)).toFixed(2))+"</h4>" +
+						"<h4 style='margin: 0; margin-top: 10px; color: dimgray; font-weight: normal;'>Paid: &#8358;"+numFormat((Number(res.Paidamount)).toFixed(2))+"</h4>" +
+						"</div>" +
+						"</div>" +
+						"</div>" +
+						"<hr/>" +
+
+						"<div class='pad-2' id='checkout-room-list'></div><hr style='margin: 0; padding: 0;'/>" +
+
+						"<div class='pad-2 w3-row'>" +
+						"<div class='w3-col l6 m6 s12'>" +
+						"<h6 style='font-family: Nunito, quicksandregular;'>Subtotal: &#8358;"+numFormat((Number(res.Total) - Number(res.Discount)).toFixed(2))+"</h6>" +
+						"<h6 style='font-family: Nunito, quicksandregular;'>Other bills: &#8358;"+numFormat(Number(res.Bills).toFixed(2))+"</h6>" +
+						"</div>" +
+						"<div class='w3-col l6 m6 s12'>" +
+						"<h6 style='font-family: Nunito, quicksandregular;'>Total: &#8358;"+numFormat(((Number(res.Total) - Number(res.Discount)) + Number(res.Bills)).toFixed(2))+"</h6>" +
+						"<h6 style='font-family: Nunito, quicksandregular;'>Paid: &#8358;"+numFormat(Number(res.Paidamount).toFixed(2))+"</h6>" +
+						"</div>" +
+						"</div>" +
+
+						"<div class='pad-2'> " +
+						"<br/>" +
+						"<label><input id='print-receipt' type='checkbox'/><span>Print receipt</span></label>" +
+						"<br/><br/>" +
+						"<button id='res-checkin-btn' class='ui blue button' onclick=\"checkOutFromLodging('"+res.Id+"','"+m.modal+"','"+category+"','"+room+"')\">" +
+						"<i class='calendar alternate outline icon'></i> Check out" +
+						"</button> " +
+						"</div>");
+
+
+					let content = "";
+
+					for(let i = 0; i < res.Rooms.length; i++)
+					{
+						if((res.Rooms[i].Category.Name === category) && (res.Rooms[i].Number === room))
+						{
+							content +=
+								"<div class='w3-row'>" +
+								"<div class='w3-col l6 m6 s12'>" +
+								"<h6 style='font-family: Nunito, quicksandregular;'><b>Room:</b> "+res.Rooms[i].Category.Name+"</h6>" +
+								"<span>"+res.Rooms[i].Number+"</span>" +
+								"</div>" +
+								"<div class='w3-col l6 m6 s12'>" +
+								"<span style='font-family: Nunito, quicksandregular;'>"+res.Rooms[i].Checkout.WeekDay+", "+
+								res.Rooms[i].Checkout.Day+" "+res.Rooms[i].Checkout.MonthName+" "+res.Checkout.Year+"</span>" +
+								"</div>" +
+								"</div>";
+						}
+					}
+					document.getElementById("checkout-room-list").innerHTML = content;
+
+				}});
+			};	
+
+			// can skip checked
+			isOverDue = skipChecking == true ? 0 : isOverDue;
+
+			if (isOverDue == 0)
+			{
+				// call checkout modal
+				loadCheckOutModal();
+			}
+			else
+			{
+				// load button
+				buttonContent = getElement(e + '-btn').innerHTML;
+
+				// start loading button
+				loadingButton({btn:e+'-btn'});
+
+				// build request
+				var request = {
+					lodgingid : e,
+					job : 'calculate overdue bill',
+					item_type : 'frontdesk_item'
+				};
+
+
+				// make request
+				// $$H
+				postJson(url.main+'/hms-admin/worker', function(data, status){
+					if (status == 'done')
+					{
+						//stop loading button
+						loadingButton({btn:e+'-btn', loading:false});
+
+						// populate in house guest again
+						populateInHouseTable();
+
+						// update total
+						data = JSON.parse(data);
+
+						for (let i = 0; i < lodging.length; i++)
+						{
+							if (lodging[i].Id === e)
+							{
+								lodging[i].Total = data.total;
+								break;
+							}
+						}
+
+						// load new
+						res.Total = data.total;
+
+						console.log(res);
+
+						// load payment modal
+						loadPageModal({size:"s",  onLoaded:function(m){
+							$("#modal_"+m.modal+"-inner").html(
+								"<div class='pad-2'>" +
+								"<div class=''>" +
+								"<h3 style='font-family: Nunito, quicksandregular; color: dimgray; font-weight: normal;'>" +
+								"<i class='blue la la-money-bill la-2x' style='vertical-align: middle;'></i>" +
+								"<span style='vertical-align: middle'> Receive payment</span>" +
+								"</h3>" +
+								"</div>" +
+								"</div>" +
+								"<hr style='margin: 0px; padding: 0px;'/><br/>" +
+								"<div id='reservation-con'>" +
+								"<div class='pad-2' id='checkin-control-con'>" +
+								"<div>" +
+								"<h3 style='font-family: Nunito, quicksandregular, serif; font-weight: normal; vertical-align: middle;'>" +
+								"<i class='la la-user blue' style='vertical-align: middle; font-size: 1.5em;'></i>"+
+								res.Guest.Name+" "+res.Guest.Surname+"</h3>" +
+								"<h5 style='margin: 0; padding: 0; font-weight: normal; font-family: Nunito, quicksandregular;'>"+res.Guest.InternalEmail+"</h5>" +
+								"<h5 style='margin: 0; margin-top: 10px; padding: 0; font-weight: normal; font-family: Nunito, quicksandregularl'>"+res.Guest.Phone.substring(0,5)+"######</h5>" +
+								"</div>" +
+								"</div>" +
+								"<hr/> " +
+								"<div class='pad-2'>" +
+								"<div class='w3-row'>" +
+								"<div class='w3-col l6 m6 s6'>" +
+								"<span style='font-family: Nunito, segoe ui;'>Subtotal</span> " +
+								"</div> " +
+								"<div class='w3-col l6 m6 s6'>" +
+								"<span style='font-family: Nunito, segoe ui;'>" +
+								"<span style='font-family: Lato;'> &#8358;</span>" +
+								numFormat(Number(res.Total).toFixed(2))+"</span> " +
+								"</div> " +
+								"</div> " +
+								"<div class='w3-row' style='margin-top: 10px;'>" +
+								"<div class='w3-col l6 m6 s6'>" +
+								"<span style='font-family: Nunito, segoe ui;'>Discount</span> " +
+								"</div> " +
+								"<div class='w3-col l6 m6 s6'>" +
+								"<span style='font-family: Nunito, segoe ui;'>" +
+								"<span style='font-family: Lato;'> &#8358;</span>" +
+								numFormat(Number(res.Discount).toFixed(2))+"</span> " +
+								"</div> " +
+								"</div> " +
+								"<div class='w3-row' style='margin-top: 10px;'>" +
+								"<div class='w3-col l6 m6 s6'>" +
+								"<span style='font-family: Nunito, segoe ui;'>Other bills</span> " +
+								"</div> " +
+								"<div class='w3-col l6 m6 s6'>" +
+								"<span style='font-family: Nunito, segoe ui;'>" +
+								"<span style='font-family: Lato;'> &#8358;</span>" +
+								numFormat(Number(res.Bills).toFixed(2))+"</span> " +
+								"</div> " +
+								"</div> " +
+								"<div class='w3-row' style='margin-top: 10px;'>" +
+								"<div class='w3-col l6 m6 s6'>" +
+								"<span style='font-family: Nunito, segoe ui;'>Total</span> " +
+								"</div> " +
+								"<div class='w3-col l6 m6 s6'>" +
+								"<span style='font-family: Nunito, segoe ui;'>" +
+								"<span style='font-family: Lato;'> &#8358;</span>"+
+								numFormat(((Number(res.Total) - Number(res.Discount)) + Number(res.Bills)).toFixed(2))+"</span> " +
+								"</div> " +
+								"</div> " +
+								"<div class='w3-row' style='margin-top: 10px;'>" +
+								"<div class='w3-col l6 m6 s6'>" +
+								"<span style='font-family: Nunito, segoe ui;'>Paid</span> " +
+								"</div> " +
+								"<div class='w3-col l6 m6 s6'>" +
+								"<span style='font-family: Nunito, segoe ui;'>" +
+								"<span style='font-family: Lato;'> &#8358;</span>"+
+								numFormat(Number(res.Paidamount).toFixed(2))+"</span> " +
+								"</div> " +
+								"</div> " +
+								"<div class='w3-row' style='margin-top: 10px;'>" +
+								"<div class='w3-col l6 m6 s6'>" +
+								"<span style='font-family: Nunito, segoe ui;'>Balance</span> " +
+								"</div> " +
+								"<div class='w3-col l6 m6 s6'>" +
+								"<span style='font-family: Nunito, segoe ui;'>" +
+								"<span style='font-family: Lato;'> &#8358;</span>"+
+								numFormat(((((Number(res.Total) - Number(res.Discount)) + Number(res.Bills)) - (Number(res.Paidamount))) < 0 ? 0 : (((Number(res.Total) - Number(res.Discount)) + Number(res.Bills)) - (Number(res.Paidamount)))).toFixed(2))+"</span> " +
+								"</div> " +
+								"</div> " +
+								"</div>" +
+								"<hr/>" +
+								"<div class='pad-2'>" +
+								"<div class='ui fluid labeled input'>" +
+								"<label class='ui label' style='font-family: Nunito, quicksandregular;'>&#8358;</label>" +
+								"<input id='pay-amount' class='wix-textbox' readonly value='"+(((((Number(res.Total) - Number(res.Discount)) + Number(res.Bills)) - (Number(res.Paidamount))) > 0) ? (((Number(res.Total) - Number(res.Discount)) + Number(res.Bills)) - (Number(res.Paidamount))) : 0)+"' placeholder='Amount'/>" +
+								"</div>" +
+								"<div>" +
+								"<div class='w3-row' style='margin-top: 15px;'>" +
+								"<div class='w3-col l6 m6 s6'>" +
+								"<label><input id='cash_payment' name='pay-method' class='with-gap' type='radio' /><span>Cash</span></label>" +
+								"</div> " +
+								"<div class='w3-col l6 m6 s6'></div> " +
+								"<label><input id='pos_payment' name='pay-method' class='with-gap' type='radio' /><span>POS (credit / debit card)</span></label>" +
+								"</div>" +
+								"<div class='w3-row' style='margin-top: 15px;'>" +
+								"<div class='w3-col l6 m6 s6'>" +
+								"<label><input id='transfer_payment' name='pay-method' class='with-gap' type='radio' /><span>Transfer / deposit</span></label>" +
+								"</div> " +
+								"<div class='w3-col l6 m6 s6'></div> " +
+								"<label><input id='others_payment' name='pay-method' class='with-gap' type='radio' /><span>Others</span></label>" +
+								"</div>" +
+								"</div> " +
+								"<hr/>" +
+								"<label><input id='add-pay-print-receipt' class='filled-in' type='checkbox'/><span>Print receipt</span></label><br/><br/>" +
+								"<button id='add-pay-btn' class='ui blue button' style='font-family: Nunito, quicksandregular; margin-top: 10px;' onclick=\"acceptLateCheckOutDeposit('"+res.Id+"','"+m.modal+"','"+category+"','"+room+"')\">Submit</button> " +
+								"</div> " +
+								"</div>");
+						}});
+					}
+				}, request);
+			}
 		}
 	}
+
 	function checkOutFromLodging(e, modal, category, room)
 	{
 		let v = document.getElementsByClassName("res-checkin-select");
@@ -4225,6 +4520,7 @@
 			}
 		}
 	}
+
 	function buildCheckOutFromLodging(res, category, room, paid, method)
 	{
 		let booking = {};
@@ -4384,9 +4680,10 @@
 
 					$(".res-checkin-select").dropdown();
 
-				}});
+			}});
 		}
 	}
+
 	function doChangeRoom(e, modal)
 	{
 		let v = document.getElementsByClassName("res-checkin-select");
@@ -4471,8 +4768,6 @@
 				}
 			}
 
-			console.log(roomList);
-
 			if(res != null)
 			{
 				let booking = buildCheckinFromReserve(res, roomList, paid, method);
@@ -4525,6 +4820,7 @@
 			}
 		}
 	}
+
 	function buildChangeRoom(e)
 	{
 		let noshow = {};
@@ -4666,6 +4962,7 @@
 				}});
 		}
 	}
+
 	function doExtendStay(e, modal)
 	{
 		let v = document.getElementsByClassName("res-checkin-select");
@@ -4885,16 +5182,118 @@
 
 			DrawTable(["Profile pic", "Name", "Contact", "Gender", "Address", "Identification", "Action"],
 				{
-					Celled: true, Padded: true, GroupAction: [{ Text: "", Method: "ConfGroupOrderDelete" }]
+					Celled: true, Padded: true, GroupAction: [{ Text: "Export CSV", Method: "exportCustomerCSV", type: 'customer' }]
 				}).outerHTML +
 
 			"</div>" +
+			"<div id='cutomerTable'></div>"+
 			"</div>"
 		);
 
 		$(".ui.dropdown").dropdown();
 
 		populateCustomers();
+	}
+
+	async function exportCustomerPDF(){
+		let jsoncustomers = JSON.parse(localStorage.getItem('customers'));
+
+		let customers = jsoncustomers.map(customer => {
+			const { Day, Month, Year } = customer.Dateofbirth; 
+			return [ customer.Name, customer.Surname, customer.Sex, customer.City, customer.State, customer.Occupation || 'none', customer.Phone, `${Day}-${Month}-${Year}`];
+		});
+		customers.unshift(['Firstname', 'Surname', 'Sex', 'City', 'State', 'Occupation', 'phone', 'Date of Birth']);
+		let table = document.createElement("table");
+		table.classList = "customers--table";
+		table.Id = "tblCustomers";
+		
+        //Get the count of columns.
+		let columnCount = customers[0].length;
+
+		//Add the header row.
+		let row = table.insertRow(-1);
+		for (let i = 0; i < columnCount; i++) {
+			let headerCell = document.createElement("th");
+			headerCell.innerHTML = customers[0][i];
+			row.appendChild(headerCell);
+		}
+
+		//Add the data rows.
+		for (let i = 1; i < customers.length; i++) {
+			row = table.insertRow(-1);
+			for (let j = 0; j < columnCount; j++) {
+				let cell = row.insertCell(-1);
+				cell.innerHTML = customers[i][j];
+			}
+		}
+
+		//Append the Table to the HTML DIV.
+		let dvTable = document.getElementById("cutomerTable");
+		dvTable.innerHTML = "";
+		dvTable.appendChild(table);
+
+		html2canvas(document.getElementById('cutomerTable'), {
+			onrendered: function (canvas) {
+				let data = canvas.toDataURL();
+				let docDefinition = {
+					content: [{
+						image: data,
+						width: 500
+					}]
+				};
+				pdfMake.createPdf(docDefinition).download("JSON.pdf");
+
+				//Remove the Table.
+				dvTable.innerHTML = "";
+			}
+		});
+
+		// console.log(columnCount);
+	}
+
+	function exportCustomerCSV(){
+		let jsoncustomers = getAllCheckedItems(JSON.parse(localStorage.getItem('customers')), 'Customers');
+
+		let customers = jsoncustomers.map(customer => {
+			const { Day, Month, Year } = customer.Dateofbirth; 
+			return { FirstName: customer.Name, SurName: customer.Surname, Sex: customer.Sex, City: customer.City, State: customer.State, Occupation: customer.Occupation || 'none', Phone: customer.Phone, DOB: `${Day}-${Month}-${Year}`};
+		});		
+		const csvData = objectToCsv(customers);
+		downloadCSV(csvData, 'customers-'+(new Date).getTime());
+	}
+
+	function downloadCSV(data, title){
+
+		const blob = new Blob([data], { type: 'text/csv'});
+		const url = window.URL.createObjectURL(blob);
+		const a = document.createElement('a'); 
+		a.setAttribute('hidden', '');
+		a.setAttribute('href', url);
+		a.setAttribute('download', title+'.csv');
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+	}
+
+	function objectToCsv(data){
+		
+		if (data.length > 0)
+		{
+			const csvRows = [];
+			// get the headers
+			const headers = Object.keys(data[0]);
+			csvRows.push(headers.join(','));
+
+			// loop over the rows
+			for(const row of data){
+				const values = headers.map(header => { 				
+					const escape = (''+row[header]).replace(/"/g, '\\"');
+					return `"${escape}"`;
+				});
+				csvRows.push(values.join(','));
+			}
+			return csvRows.join('\n');
+		}				
 	}
 
 	function drawReservation()
@@ -4954,13 +5353,23 @@
 			"  <a id='unpaid-reservations' class='item reserve-tab' onclick='switchReserveTab(this)' style='font-family: Nunito;'>" +
 			"     <i class='red times circle icon'></i> Unpaid" +
 			"  </a>" +
+			"  <a id='partial-paid-reservations' class='item reserve-tab' onclick='switchReserveTab(this)' style='font-family: Nunito;'>" +
+			"     <i class='yellow check circle icon'></i> Partial Paid" +
+			"  </a>" +
 			"  <a id='abandoned-reservations' class='item reserve-tab' onclick='switchReserveTab(this)' style='font-family: Nunito;'>" +
 			"     <i class='red calendar alternate outline icon'></i> No Show" +
 			"  </a>" +
 			"    <div class='item'>" +
 			"      <div class='ui transparent icon input'>" +
 			"        <input id='reservation-due-date' type='text' data-toggle='datepicker' " +
-			"             placeholder='Select due date' onchange='populateReservations(); ehChange()'>" +
+			"             placeholder='Date from' onchange='populateReservations();'>" +
+			"        <i id='reservation-cancel-btn' class='blue calendar alternate outline icon' onclick='cancelDate()'></i>" +
+			"      </div>" +
+			"    </div>" +
+			"	<div class='item'>" +
+			"      <div class='ui transparent icon input'>" +
+			"        <input id='reservation-due-date-range' type='text' data-toggle='datepicker' " +
+			"             placeholder='Date to' onchange='populateReservations();'>" +
 			"        <i id='reservation-cancel-btn' class='blue calendar alternate outline icon' onclick='cancelDate()'></i>" +
 			"      </div>" +
 			"    </div>" +
@@ -4969,7 +5378,7 @@
 			"      <div class='ui transparent icon input'>" +
 			"        <input id='search-txt' type='text' placeholder='Search...' " +
 			"         onkeyup='if(event.keyCode == 13){populateReservationTable();}'/>" +
-			"        <i class='search link icon'></i>" +
+			"        <i class='search link icon' onclick=\"populateReservationTable()\"></i>" +
 			"      </div>" +
 			"    </div>" +
 			"  </div>" +
@@ -4977,7 +5386,7 @@
 
 			DrawTable(["Reservation Detail", "Total", "Payment", "Date", "Status", "Action"],
 				{
-					Celled: true, Padded: true, GroupAction: [{ Text: "Cancel reservations", Method: "ConfGroupOrderDelete" }]
+					Celled: true, Padded: true, GroupAction: [{ Text: "Cancel reservations", Method: "ConfGroupOrderDelete" }, { Text: "Export CSV", Method: "exportReservationCSV" }]
 				}).outerHTML +
 
 			"</div>" +
@@ -4986,8 +5395,20 @@
 
 		$(".ui.dropdown").dropdown();
 
-		let picker3 = new Lightpick({
+		new Lightpick({
 			field: document.getElementById('reservation-due-date'),
+			singleDate: true,
+			inline:false,
+			format:"MM/DD/YY",
+			numberOfColumns:1,
+			numberOfMonths:1,
+			onSelect: function(date){
+				populateReservationTable();
+			}
+		});
+
+		new Lightpick({
+			field: document.getElementById('reservation-due-date-range'),
 			singleDate: true,
 			inline:false,
 			format:"MM/DD/YY",
@@ -5001,12 +5422,167 @@
 		populateReservationTable();
 	}
 
+	function exportReservationPDF(){
+		let jsoncustomers = JSON.parse(localStorage.getItem('customers'));
+
+		let customers = jsoncustomers.map(customer => {
+			const { Day, Month, Year } = customer.Dateofbirth; 
+			return [ customer.Name, customer.Surname, customer.Sex, customer.City, customer.State, customer.Occupation || 'none', customer.Phone, `${Day}-${Month}-${Year}`];
+		});
+
+		console.log(customers, jsoncustomers);
+		// customers.unshift(['Firstname', 'Surname', 'Sex', 'City', 'State', 'Occupation', 'phone', 'Date of Birth']);
+		// let table = document.createElement("table");
+		// table.classList = "customers--table";
+		// table.Id = "tblCustomers";
+		
+        // //Get the count of columns.
+		// let columnCount = customers[0].length;
+
+		// //Add the header row.
+		// let row = table.insertRow(-1);
+		// for (let i = 0; i < columnCount; i++) {
+		// 	let headerCell = document.createElement("th");
+		// 	headerCell.innerHTML = customers[0][i];
+		// 	row.appendChild(headerCell);
+		// }
+
+		// //Add the data rows.
+		// for (let i = 1; i < customers.length; i++) {
+		// 	row = table.insertRow(-1);
+		// 	for (let j = 0; j < columnCount; j++) {
+		// 		let cell = row.insertCell(-1);
+		// 		cell.innerHTML = customers[i][j];
+		// 	}
+		// }
+
+		// //Append the Table to the HTML DIV.
+		// let dvTable = document.getElementById("cutomerTable");
+		// dvTable.innerHTML = "";
+		// dvTable.appendChild(table);
+
+		// html2canvas(document.getElementById('cutomerTable'), {
+		// 	onrendered: function (canvas) {
+		// 		let data = canvas.toDataURL();
+		// 		let docDefinition = {
+		// 			content: [{
+		// 				image: data,
+		// 				width: 500
+		// 			}]
+		// 		};
+		// 		pdfMake.createPdf(docDefinition).download("JSON.pdf");
+
+		// 		//Remove the Table.
+		// 		dvTable.innerHTML = "";
+		// 	}
+		// });
+
+		// console.log(columnCount);
+	}
+
+	function ConfGroupOrderDelete()
+	{
+		ShowModal('Coming soon...');
+	}
+
+	// custom function to return all checked items in a report
+	function getAllCheckedItems(data, title, findBy='Id')
+	{
+		// @var array checkedItems
+		let checkedItems = [];
+
+		// get check selection
+		[].forEach.call(document.querySelectorAll('.check-sel'), (element)=>{
+
+			// check if checkbox is checked
+			if (element.checked)
+			{
+				// get item id
+				const itemId = element.id;
+
+				// push to checked reservation
+				data.forEach(row => {
+					if (row[findBy] == itemId)
+					{
+						checkedItems.push(row);
+					}
+				});
+			}
+		});
+
+		// alert user
+		if (checkedItems.length == 0)
+		{
+			// remove checked
+			var checked = document.querySelector('.item.active.selected');
+
+			// are we good 
+			if (checked != null)
+			{
+				checked.classList.remove('selected');
+				checked.classList.remove('active');
+			}
+
+			ShowModal('No '+title+' checked for export');
+		}
+
+		// return array
+		return checkedItems;
+	}
+
+	function exportReservationCSV(){
+
+		let jsonreservations = getAllCheckedItems(JSON.parse(localStorage.getItem('reservations')), 'Reservation');
+		if(jsonreservations != null && jsonreservations.length > 0)
+		{
+			let sn = 0;
+			let reservations = jsonreservations.map(reservation => {
+				sn += 1;
+				
+				const { Day, MonthName, Year } = reservation.Checkindate;
+				const payment_status = reservation.Paid ? 'Paid' : 'Unpaid';
+	
+				// Last seen date
+				const lastseenDay = reservation.Customer.Lastseen.Day;
+				const lastseenDMonth = reservation.Customer.Lastseen.MonthName;
+				const lastseenYear = reservation.Customer.Lastseen.Year;
+				const phone = reservation.Customer.Phone.search("#") > -1 ? '-' : reservation.Customer.Phone;
+				const status = reservation.Noshow == 1 ? 'No show' : (reservation.UnconfirmedNoShow == 1 ? 'Pending No show' : (reservation.Cancelled ? 'Canceled' : (reservation.Checkedin == true ? 'Checked In' : (reservation.Checkedout == true ? 'Checked Out' : (reservation.CanMarkNoShow ? 'Overdue' : 'Pending')))));
+
+				return { 
+					SN: sn, 
+					Name: `${reservation.Customer.Name} ${reservation.Customer.Surname}`, 
+					Phone: phone,
+					Email: reservation.Customer.Email,
+					ReservationID: reservation.Id, 
+					No_of_rooms: reservation.Rooms.length, 
+					Adult: reservation.Adult,
+					Children: reservation.Children, 
+					Total_amount: reservation.Total, 
+					Discount: reservation.Discount,
+					Payment_status: payment_status, 
+					Amt_paid: reservation.Paidamount, 
+					Outstanding: parseFloat(reservation.Total) - (parseFloat(reservation.Paidamount) + parseFloat(reservation.Discount)),
+					Check_in_date: `${Day}-${MonthName}-${Year}`,
+					Check_out_date: `${reservation.Checkoutdate.Day}-${reservation.Checkoutdate.MonthName}-${reservation.Checkoutdate.Year}`,
+					Date_last_seen: `${lastseenDay}-${lastseenDMonth}-${lastseenYear}`,
+					Status: status
+				};
+			});
+	
+			const csvData = objectToCsv(reservations);
+			downloadCSV(csvData, 'Reservation-'+(new Date).getTime());
+		}
+	}
+
 	function switchReserveTab(e)
 	{
 		$(".reserve-tab").removeClass("active");
 		$(e).addClass("active");
-		$("#reservation-due-date").val("");
+		//$("#reservation-due-date").val("");
 		$("#search-txt").val("");
+		// uncheck main sel
+		document.querySelector('#main-sel').checked = false;
 		populateReservationTable();
 	}
 	
@@ -5014,12 +5590,10 @@
 	{
 		$(".reserve-tab").removeClass("active");
 		$(e).addClass("active");
+		document.querySelector('#main-sel').checked = false;
 		populateInHouseTable();
 	}
 	
-
-
-
 	function selectRoom()
 	{
 		$("#check-in").addClass("disabled");
@@ -5368,7 +5942,7 @@
 			// find customers
 			if (customersJson === null)
 			{
-				postJson('hms-admin/worker', function(data){
+				postJson(url.main+'hms-admin/worker', function(data){
 
 					var json = JSON.parse(data);
 
@@ -5401,6 +5975,19 @@
 		}
 	}
 
+	// check if phone is banned
+	function checkIfPhoneIsBanned(e)
+	{
+		checkIfBanned(e.value, 'phone');
+	}
+
+
+	// check if email is banned
+	function checkIfEmailIsBanned(e)
+	{
+		checkIfBanned(e.value, 'email');
+	}
+	
 	// add guest information
 	function addGuestInformation(reRenderDropdown = true)
 	{
@@ -5447,7 +6034,7 @@
 			"<div class='l-width-xl'>" +
 			"<div class='ui fluid left icon input'>" +
 			"<i class='mobile icon'></i> " +
-			"<input id='guest-phone' class='wix-textbox'  value='"+(checkin.guest.phone != null ? checkin.guest.phone : '')+"' placeholder='Phone' type='text'/>" +
+			"<input id='guest-phone' class='wix-textbox'  value='"+(checkin.guest.phone != null ? checkin.guest.phone : '')+"' onchange='checkIfPhoneIsBanned(this)' placeholder='Phone' type='text'/>" +
 			"</div>" +
 			"</div>" +
 			"</div> " +
@@ -5455,7 +6042,7 @@
 			"<div class=''>" +
 			"<div class='ui fluid left icon input'>" +
 			"<i class='at icon'></i>" +
-			"<input id='guest-email' class='wix-textbox' value='"+(checkin.guest.email != null ? checkin.guest.email : '')+"' placeholder='Email' type='text'/>" +
+			"<input id='guest-email' class='wix-textbox' value='"+(checkin.guest.email != null ? checkin.guest.email : '')+"' onchange='checkIfEmailIsBanned(this)' placeholder='Email' type='text'/>" +
 			"</div>" +
 			"</div>" +
 			"</div> " +
@@ -5543,10 +6130,9 @@
 
 		$("#country").dropdown('set selected', (checkin.guest.country != null ? checkin.guest.country : ''));
 
-
 		$("#country").dropdown();
 
-		var dob = new Lightpick({
+		new Lightpick({
 			field: document.getElementById('dob'),
 			singleDate: true,
 			inline:false,
@@ -5558,6 +6144,102 @@
 			}
 		});
 
+
+		// check phone
+		if (typeof checkin.guest.phone != 'undefined')
+		{
+			checkIfBanned(checkin.guest.phone, 'phone');
+		}
+
+		// check email
+		if (typeof checkin.guest.email != 'undefined')
+		{
+			checkIfBanned(checkin.guest.email, 'email');
+		}
+
+	}
+
+	var processes = [], index = 0, args = [], inProcess = false, discountAdded = false;
+
+	// check if customer has been banned
+	function checkIfBanned(value, type)
+	{
+		// push request
+		processes.push(function(){
+			
+			// trigger loader
+			loadingButton({btn:"billing-btn"});
+
+			// make request
+			postJson(url.main+'hms-pos/worker', function(data, status){
+
+				if (status == 'done')
+				{	
+					loadingButton({btn:"billing-btn", loading:false});
+
+					// get object
+					var data = JSON.parse(data);
+
+					// check status
+					if (data.status == 'error')
+					{
+						processes = []; index = 0; args = []; inProcess = false;
+						errorButton({btn:"billing-btn", msg:data.message});
+						checkin.guest = {};
+						// wait and reload
+						setTimeout(()=>{
+							addGuestInfo();
+						}, 1500);
+					}
+					else if (data.status == 'success')
+					{
+						if (index < args.length)
+						{
+							// increment index
+							index++;
+
+							// get args
+							value = args[index][0];
+							type = args[index][1];
+
+							// call next
+							processes[index].call(this);
+
+							if (index == args.length-1 || index == args.length)
+							{
+								processes = []; index = 0; args = []; inProcess = false;
+							}
+						}
+						else
+						{
+							processes = []; index = 0; args = []; inProcess = false;
+						}
+					}
+				}
+
+			}, {
+				job : 'confirm account ban',
+				value : value,
+				type : type,
+				item_type : 'frontdesk_item'
+			});
+		});
+
+		// push args 
+		args.push(arguments);
+
+		// view all
+		if (inProcess === false)
+		{
+			inProcess = true;
+
+			// get values
+			value = args[index][0];
+			type = args[index][1];
+
+			// call process
+			processes[index].call(this);
+		}
 	}
 
 	// load guest dropdown
@@ -5614,7 +6296,6 @@
 		}
 	}
 
-
 	function addBillingInfo()
 	{
 		if(checkinList.length > 0)
@@ -5622,6 +6303,40 @@
 			$("#guest-info-page").html("");
 			$("#action-btn-page").html("");
 
+			// set discount
+			let discount = 0, paymentCollection = null, paymentDiscount = null;
+
+			// update discount added
+			discountAdded = false;
+
+			// load discount
+			discounts.forEach((e)=>{
+				if (e.Autoapply)
+				{
+					// get room id
+					checkin.rooms.forEach((room)=>{
+						if (e.Booking.indexOf(room.id) >= 0)
+						{
+							if (e.Offlineorder == true || e.WithinPeriodForDiscount == true)
+							{
+								addedDiscount.push(e);
+							}
+
+							if (e.PaymentMode == true && paymentCollection == null)
+							{
+								// load payment collection
+								paymentCollection = JSON.parse(e.PaymentCollection);
+
+								// add discount
+								paymentDiscount = e;
+							}
+						} 
+					});
+				}
+			});
+
+			// get the total
+			var total = checkin.total;
 
 			let d = document.createElement("div");
 			d.innerHTML =
@@ -5655,7 +6370,7 @@
 				"<h4 class='sleak' style='color: dimgray;'>" +
 				"<span style='font-family: Lato;'>&#8358;</span>" +
 				"<span id='subtotal_con'> "+
-				numFormat(Number(checkin.total).toFixed(2))+
+				numFormat(Number(checkin.total).toFixed(2)) +
 				"</span>" +
 				"</h4>" +
 				"</div> " +
@@ -5670,7 +6385,7 @@
 				"<h4 class='sleak' style='color: dimgray;'>" +
 				"<span style='font-family: Lato;'>&#8358;</span>" +
 				"<span id='discount_con'> "+
-				numFormat(Number(0).toFixed(2))+
+				numFormat(Number(discount).toFixed(2)) +
 				"</span>" +
 				"</h4>" +
 				"</div> " +
@@ -5685,7 +6400,7 @@
                 "<h3 class='sleak'>" +
                 "<span style='font-family: Lato;'>&#8358;</span> " +
 				"<span id='total_con'>"+
-                numFormat(Number(checkin.total).toFixed(2))+
+                numFormat(Number(checkin.total).toFixed(2)) +
                 "</span>" +
 				"</h3>" +
                 "</div> " +
@@ -5745,6 +6460,7 @@
 
 				"</div>" +
 				"</div>";
+
 			getElement("guest-info-page").appendChild(d);
 
 
@@ -5784,26 +6500,74 @@
 
 				getElement("discount-list-con").appendChild(con);
 			}
+
 			for(let g = 0; g < addedDiscount.length; g++)
 			{
-				let con = document.createElement("div");
-				con.className = "w3-row";
-				con.id = "discount-"+addedDiscount[g].Id;
-				con.innerHTML = "<div class='w3-col l8 m8 s8 pad-t'>" +
-					"<label class='sleak' style='font-weight: bold; color: dimgray;'>"+
-					addedDiscount[g].Name+"</label></div>" +
-					"<div class='w3-col l2 m2 s2'>"+
-					(addedDiscount[g].Bypercentage ? addedDiscount[g].Value+"%" : $("#currency-symbol").val()+
-						numFormat(Number(addedDiscount[g].Value).toFixed(2)))+"</div>" +
-					"<div class='w3-col l2 m2 s2 align-r'>" +
-					"<i class='red times icon' style='cursor: pointer;' " +
-					"onclick=\"removeDiscount('"+addedDiscount[g].Id+"')\"></i> " +
-					"</div>";
-
-				getElement("discount-list-con").appendChild(con);
+				populateDiscountList(addedDiscount[g]);
 			}
 
 			calculate();
+
+			$('#discount_con').text(numFormat(Number(total).toFixed() - Number($('#deposit-amount').val()).toFixed(2)));
+			$('#total_con').text(numFormat(Number($('#deposit-amount').val()).toFixed(2)));
+
+			// load payment method
+			let loadPaymentMethods = document.querySelectorAll("*[name='pay-method']");
+
+			// run through
+			[].forEach.call(loadPaymentMethods, (pm)=>{
+
+				pm.addEventListener('change', ()=>{
+
+					// is checked
+					if (pm.checked)
+					{
+						if (discountAdded === true)
+						{
+							// remove discount
+							removeDiscount(paymentDiscount.Id);
+
+							// toggle off
+							discountAdded = false;
+						}
+
+						// print collection
+						switch (pm.id)
+						{
+							case 'cash_pay':
+								if (paymentCollection.cash == true && discountAdded == false)
+								{
+									addedDiscount.push(paymentDiscount);
+									discountAdded = true;
+								}
+							break;
+
+							case 'pos_pay':
+								if (paymentCollection.card == true && discountAdded == false)
+								{
+									addedDiscount.push(paymentDiscount);
+									discountAdded = true;
+								}
+							break;
+
+							case 'transfer_pay':
+								if (paymentCollection.transfer == true && discountAdded == false)
+								{
+									addedDiscount.push(paymentDiscount);
+									discountAdded = true;
+								}
+							break;
+						}
+
+						if (discountAdded === true)
+						{
+							populateDiscountList(paymentDiscount);
+						}
+					}
+
+					calculate();
+				});
+			});
 		}
 		else
 		{
@@ -5812,6 +6576,25 @@
 				closeCheckinForm();
 			}
 		}
+	}
+
+	function populateDiscountList(discount)
+	{
+		let con = document.createElement("div");
+		con.className = "w3-row";
+		con.id = "discount-"+discount.Id;
+		con.innerHTML = "<div class='w3-col l8 m8 s8 pad-t'>" +
+			"<label class='sleak' style='font-weight: bold; color: dimgray;'>"+
+			discount.Name+"</label></div>" +
+			"<div class='w3-col l2 m2 s2'>"+
+			(discount.Bypercentage ? discount.Value+"%" : $("#currency-symbol").val()+
+				numFormat(Number(discount.Value).toFixed(2)))+"</div>" +
+			"<div class='w3-col l2 m2 s2 align-r'>" +
+			"<i class='red times icon' style='cursor: pointer;' " +
+			"onclick=\"removeDiscount('"+discount.Id+"')\"></i> " +
+			"</div>";
+
+		getElement("discount-list-con").appendChild(con);
 	}
 
 	function completeCheckinData()
@@ -6029,7 +6812,8 @@
 	
 	
 	//---------------------------  populate tables ----------------------------------------------
-	
+	var currentPage = 0;
+
 	function populateReservation(page)
 	{
 		let start = page == null ? 0 : page;
@@ -6062,6 +6846,7 @@
 			filter = "abandoned";
 		}
 
+		currentPage = page;
 
 		let added = 0;
 
@@ -6138,33 +6923,20 @@
 					"<br/><span style='color: silver;'>Check out: </span>" +
 					reservations[i].Checkoutdate.WeekDay+", "+reservations[i].Checkoutdate.Day+"/"+reservations[i].Checkoutdate.MonthName+"/"+reservations[i].Checkoutdate.Year;
 
+				let isOverdue = reservationIsOverdue(reservations[i]);
 				let td5 = document.createElement("td");
 				td5.style.lineHeight = "170%";
-				td5.innerHTML = ((reservations[i].Noshow) ? "<span class='status red-back'>No show</span>" : "<span class='status yellow-back'>Pending</span>");
+				td5.innerHTML = ((reservations[i].Noshow == 1) ? "<span class='status red-back' style='background:#f20; color:#fff !important;'>No show</span>" : (reservations[i].Checkedin == true ? "<span class='green status'>Checked in</span>" : "<span class='status yellow-back'>Pending</span>"));
+						
+				// is overdue
+				if (isOverdue && reservations[i].Noshow == 0) td5.innerHTML = "<span class='status red-back'>Overdue</span>";
+
+				// pending overdue
+				if (reservations[i].UnconfirmedNoShow == 1) td5.innerHTML = "<span class='status' style='background:#FFBF00; color:#fff;' title='Pending Confirmation'>No show</span>";
 
 				let td6 = document.createElement("td");
 
-				if(reservations[i].Noshow)
-				{
-					td6.innerHTML = "<div class='pad-1'><button class='ui disabled icon button'><i class='cog red icon icon'></i></button></div>";
-				}
-				else
-				{
-					td6.innerHTML = "<div class='w3-container'> " +
-						"<div id='" + reservations[i].Id + "-btn' class='ui icon top right pointing dropdown button c-menu s-float-r'>" +
-						"<i class='blue wrench icon'></i>" +
-						"<div class='menu'>" +
-						"<div class='header'>Action</div>" +
-						"<div class='item' onclick=\"showReservationDetails('" + reservations[i].Id + "')\"><i class='eye blue icon'></i>See details</div>" +
-						"<div class='ui divider'></div>" +
-						"<div class='item' onclick=\"acceptPayment('" + reservations[i].Id + "')\"><i class='money green icon'></i>Accept payment</div>" +
-						"<div class='item' onclick=\"checkinReservation('" + reservations[i].Id + "')\"><i class='check green icon'></i>Check in</div>" +
-						"<div class='ui divider'></div>" +
-						"<div class='item' onclick=\"confirmMarkNoShow('" + reservations[i].Id + "')\"><i class='calendar red outline alternate times icon'></i>Mark no-show</div>" +
-						"<div class='item' onclick=\"confirmCancelReservation('" + reservations[i].Id + "')\"><i class='trash red icon'></i>Cancel reservation</div>" +
-						"</div>" +
-						"</div></div>";
-				}
+				generateReservationButton(td6, reservations[i]);
 				/*
 				let td6 = document.createElement("td");
 				td6.innerHTML = "<div class='w3-container'> " +
@@ -6212,8 +6984,6 @@
 	{
 		let res = null;
 
-		console.log(e, reservations);
-
 		for(let i = 0; i < reservations.length; i++)
 		{
 			if(reservations[i].Id === e)
@@ -6257,6 +7027,30 @@
 
 
 			loadPageModal({size:"s",  onLoaded:function(m){
+
+				// ######
+				var phone = res.Customer.Phone, isExpiredOrOverdue = false;
+
+				// check if reservation is expired or overdue
+				if (res.Checkedin == 0)
+				{
+					// build today
+					var date = new Date, today, checkinDate;
+					today = date.getDate() + '' + date.getMonth() + '' + date.getFullYear();
+
+					// build checkout date
+					checkinDate = res.Checkindate.Day + '' + parseInt(res.Checkindate.Month) - 1 + '' + res.Checkoutdate.Year;
+
+					// are we good ?
+					if (parseInt(today) > parseInt(checkinDate)) isExpiredOrOverdue = true;
+				}
+
+				// hash phone
+				if (res.Checkedout === true || isExpiredOrOverdue === true)
+				{
+					phone = phone.substring(0,5) + '######';
+				}
+
 				$("#modal_"+m.modal+"-inner").html(
 					"<div class='pad-2'>" +
 					"<div class='w3-row'>" +
@@ -6283,7 +7077,7 @@
 					"<i class='la la-user blue' style='vertical-align: middle; font-size: 1.6em;'></i> "+
 					res.Customer.Name+" "+res.Customer.Surname+"</h3>" +
 					"<h5 style='margin: 0; padding: 0; font-weight: normal; font-family: Nunito, quicksandregular;'>"+res.Customer.InternalEmail+"</h5>" +
-					"<h5 style='margin: 0; margin-top: 10px; padding: 0; font-weight: normal; font-family: Nunito, quicksandregularl'>"+res.Customer.Phone.substring(0,5)+"######</h5>" +
+					"<h5 style='margin: 0; margin-top: 10px; padding: 0; font-weight: normal; font-family: Nunito, quicksandregularl'>"+phone+"</h5>" +
 
 					"</div>" +
 					"<div class='w3-col l4 m4 s4'>" +
@@ -6454,7 +7248,7 @@
 					"<button id='add-pay-btn' class='ui blue button' style='font-family: Nunito, quicksandregular; margin-top: 10px;' onclick=\"addPayment('"+res.Id+"','"+m.modal+"')\">Add payment</button> " +
 					"</div> " +
 					"</div>");
-				}});
+			}});
 		}
 	}
 
@@ -6793,8 +7587,6 @@
 			{
 				let booking = buildCheckinFromReserve(res, roomList, paid, method);
 
-				console.log(booking);
-
 				if(booking != null)
 				{
 					addItemToQue(booking, roomList);
@@ -6872,8 +7664,6 @@
 			booking.store.rooms.push({category: rooms[i].name, checkin: wxDateToTime(res.Checkindate).getTime(), checkout: wxDateToTime(res.Checkoutdate).getTime(), days: res.Period,
 				id: res.Id, price: rooms[i].price, room: rooms[i].number});
 		}
-
-
 
 		booking.discounts = [];
 		booking.posuser = $("#pos-user").val();
@@ -6992,9 +7782,12 @@
 		}
 	}
 
-	function markNoShow(e)
+	function markNoShow(e, other={})
 	{
 		let nShow = buildNoSHow(e);
+
+		// join other
+		nShow = Object.assign(nShow, other);
 
 		for(let i = 0; i < reservations.length; i++)
 		{
@@ -7004,11 +7797,13 @@
 				break;
 			}
 		}
+
 		if(nShow != null)
 		{
 			addItemToQue(nShow);
-			reBuildReservationRow(e);
-			populateReservationsSummary();
+			reBuildReservationRow(e, true);
+			//populateReservationTable(currentPage);
+			//populateReservationsSummary();
 		}
 	}
 
@@ -7027,7 +7822,7 @@
 		return noshow;
 	}
 
-	function reBuildReservationRow(e)
+	function reBuildReservationRow(e, pendingNoshow = false)
 	{
 		let row = document.getElementById(e+"-row");
 
@@ -7078,35 +7873,21 @@
 						"<br/><span style='color: silver;'>Check out: </span>" +
 						reservations[i].Checkoutdate.WeekDay+", "+reservations[i].Checkoutdate.Day+"/"+reservations[i].Checkoutdate.MonthName+"/"+reservations[i].Checkoutdate.Year;
 
+					let isOverdue = reservationIsOverdue(reservations[i]);
 					let td5 = document.createElement("td");
 					td5.style.lineHeight = "170%";
-					td5.innerHTML = ((reservations[i].Noshow) ? "<span class='status red-back'>No show</span>" : "<span class='status yellow-back'>Pending</span>");
+					td5.innerHTML = ((reservations[i].Noshow == 1) ? "<span class='status red-back' style='background:#f20; color:#fff !important;'>No show</span>" : (reservations[i].Checkedin == true ? "<span class='green status'>Checked in</span>" : "<span class='status yellow-back'>Pending</span>"));
+						
+					// is overdue
+					if (isOverdue && reservations[i].Noshow == 0) td5.innerHTML = "<span class='status red-back'>Overdue</span>";
+
+					// pending overdue
+					if (reservations[i].UnconfirmedNoShow == 1 || pendingNoshow) td5.innerHTML = "<span class='status' style='background:#FFBF00; color:#fff;' title='Pending Confirmation'>No show</span>";
+
 
 					let td6 = document.createElement("td");
 
-					if(reservations[i].Noshow)
-					{
-						td6.innerHTML = "<div class='pad-1'><button class='ui disabled icon button'><i class='cog red icon icon'></i></button></div>";
-					}
-					else
-					{
-						td6.innerHTML = "<div class='w3-container'> " +
-							"<div id='" + reservations[i].Id + "-btn' class='ui icon top right pointing dropdown button c-menu s-float-r'>" +
-							"<i class='blue wrench icon'></i>" +
-							"<div class='menu'>" +
-							"<div class='header'>Action</div>" +
-							"<div class='item' onclick=\"showReservationDetails('" + reservations[i].Id + "')\"><i class='eye blue icon'></i>See details</div>" +
-							"<div class='ui divider'></div>" +
-							"<div class='item' onclick=\"acceptPayment('" + reservations[i].Id + "')\"><i class='money green icon'></i>Accept payment</div>" +
-							"<div class='item' onclick=\"checkinReservation('" + reservations[i].Id + "')\"><i class='check green icon'></i>Check in</div>" +
-							"<div class='ui divider'></div>" +
-							"<div class='item' onclick=\"confirmMarkNoShow('" + reservations[i].Id + "')\"><i class='calendar red outline alternate times icon'></i>Mark no-show</div>" +
-							"<div class='item' onclick=\"confirmCancelReservation('" + reservations[i].Id + "')\"><i class='trash red icon'></i>Cancel reservation</div>" +
-							"</div>" +
-							"</div></div>";
-					}
-
-
+					generateReservationButton(td6, reservations[i]);
 
 					row.appendChild(td0);
 					row.appendChild(td1);
@@ -7127,8 +7908,6 @@
 
 		let t = new Date();
 		let today = new Date(t.getFullYear(), t.getMonth(), t.getDate());
-
-		console.log(e+"-"+category+"-"+room+"-row");
 
 		if(row != null)
 		{
@@ -7174,7 +7953,7 @@
 							let td4 = document.createElement("td");
 							td4.style.lineHeight = "170%";
 
-							let b = ((Number(lodging[i].Total) + Number(lodging[i].Bills)) - Number(lodging[i].Paidamount));
+							let b = ((Number(lodging[i].Total) + Number(lodging[i].Bills)) - Number(lodging[i].Paidamount) - Number(lodging[i].Discount));
 
 							td4.innerHTML = "<span style='color: silver;'>Deposit:</span> &#8358; "+
 								numFormat(Number(lodging[i].Paidamount).toFixed(2)) +
@@ -8379,7 +9158,7 @@
 		}
 
 		loadingButton({btn:"paystack-btn"});
-		postJson("hms-pos/worker", function(data, status){
+		postJson(url.main+"hms-pos/worker", function(data, status){
 			loadingButton({btn:"paystack-btn", loading:false});
 			if(status === "done")
 			{
@@ -8434,7 +9213,7 @@
 	function confirmPaystackPay(ref, func)
 	{
 		loadingButton({btn:"paystack-btn"});
-		postJson("hms-pos/worker", function(data, status){
+		postJson(url.main+"hms-pos/worker", function(data, status){
 			loadingButton({btn:"paystack-btn", loading:false});
 			if(status === "done")
 			{
@@ -8456,8 +9235,45 @@
 		},{job:"confirm paystack pay", reference:ref})
 	}
 
-	///Web data table population
+	function reservationIsOverdue(reservation)
+	{
+		// is overdue
+		let isOverdue = false;
 
+		// build checkout and checkin date
+		let checkOutDate = reservation.Checkoutdate.Day + '' + parseInt(reservation.Checkoutdate.Month)-1 + '' + reservation.Checkoutdate.Year;
+		let checkInDate = reservation.Checkindate.Day + '' + parseInt(reservation.Checkindate.Month)-1 + '' + reservation.Checkindate.Year;
+
+		// get date
+		let date = new Date;
+
+		// build today
+		let todayDate = date.getDate() + '' + date.getMonth() + '' + date.getFullYear();
+
+		// is overdue??
+		if (parseInt(todayDate) > parseInt(checkInDate))
+		{
+			if (!reservation.Checkedin)
+			{
+				isOverdue = true;
+			}
+			else
+			{
+				// check out passed ???
+				if (parseInt(todayDate) > parseInt(checkOutDate))
+				{
+					if (reservation.Noshow == 0)
+					{
+						isOverdue = true;
+					}
+				}
+			}
+		}
+
+		return isOverdue;
+	}
+
+	///Web data table population
 	function populateReservationTable(page)
 	{
 		let request = {};
@@ -8469,6 +9285,10 @@
 		request.job = "get reservations";
 
 		request.dueDate = $("#reservation-due-date").val();
+		request.dueDateTo = $("#reservation-due-date-range").val();
+
+		// run page
+		currentPage = page;
 
 		if($("#paid-reservations").hasClass("active"))
 		{
@@ -8478,15 +9298,14 @@
 		{
 			request.filter = "unpaid";
 		}
+		if($("#partial-paid-reservations").hasClass("active"))
+		{
+			request.filter = "partial-paid";
+		}
 		if($("#abandoned-reservations").hasClass("active"))
 		{
 			request.filter = "abandoned";
 		}
-		
-
-		let t = new Date();
-		let today = new Date(t.getFullYear(), t.getMonth(), t.getDate());
-
 
 		if(Number(page) > 0)
 		{
@@ -8499,15 +9318,16 @@
 
 
 		$("#table-body").html(tableLoader(7));
-		postJson("hms-admin/worker", function(data, status){
+		postJson(url.main+"hms-admin/worker", function(data, status){
 			$("#table-body").html("");
 
 			if(status === "done")
-			{
+			{								
 				let d = JSON.parse(data);
 
 				if(d.Status === "success")
 				{
+					localStorage.setItem('reservations', JSON.stringify(d.Data));
 					let sn = ((d.Page - 1) * d.Perpage) + 1;
 					$("#pages").html(Paginate(Number(d.Page), Number(d.Total), Number(d.Perpage), "populateInventoryItems"));
 
@@ -8553,7 +9373,8 @@
 							"<br/><span style='color: silver;'>Paid </span>&#8358; "+
 							numFormat(Number(d.Data[i].Paidamount).toFixed(2));
 
-
+						// is overdue
+						let isOverdue = reservationIsOverdue(d.Data[i]);
 
 						let td3 = document.createElement("td");
 						td3.style.lineHeight = "170%";
@@ -8568,48 +9389,17 @@
 
 						let td5 = document.createElement("td");
 						td5.style.lineHeight = "170%";
-						td5.innerHTML = ((d.Data[i].Noshow == 1) ? "<span class='status red-back'>No show</span>" : (d.Data[i].Checkedin == true ? "<span class='green status'>Checked in</span>" : "<span class='status yellow-back'>Pending</span>"));
+						td5.innerHTML = ((d.Data[i].Noshow == 1) ? "<span class='status red-back' style='background:#f20; color:#fff !important;'>No show</span>" : (d.Data[i].Checkedin == true ? "<span class='green status'>Checked in</span>" : "<span class='status yellow-back'>Pending</span>"));
+						
+						// is overdue
+						if (isOverdue && d.Data[i].Noshow == 0) td5.innerHTML = "<span class='status red-back'>Overdue</span>";
+
+						// pending overdue
+						if (d.Data[i].UnconfirmedNoShow == 1) td5.innerHTML = "<span class='status' style='background:#FFBF00; color:#fff;' title='Pending Confirmation'>No show</span>";
+
 						let td6 = document.createElement("td");
 
-						if(d.Data[i].Noshow)
-						{
-							td6.innerHTML = "<div class='pad-1'><button class='ui disabled icon button'><i class='cog red icon icon'></i></button></div>";
-						}
-						else
-						{
-							if (d.Data[i].Checkedin == true)
-							{
-								td6.innerHTML = "<div class='w3-container'> " +
-									"<div id='" + d.Data[i].Id + "-btn' class='ui icon top right pointing dropdown button c-menu s-float-r'>" +
-									"<i class='blue wrench icon'></i>" +
-									"<div class='menu'>" +
-									"<div class='header'>Action</div>" +
-									"<div class='item' onclick=\"showReservationDetails('" + d.Data[i].Id + "')\"><i class='eye blue icon'></i>See details</div>" +
-									"</div>" +
-									"</div></div>";
-							}
-							else
-							{
-								td6.innerHTML = "<div class='w3-container'> " +
-									"<div id='" + d.Data[i].Id + "-btn' class='ui icon top right pointing dropdown button c-menu s-float-r'>" +
-									"<i class='blue wrench icon'></i>" +
-									"<div class='menu'>" +
-									"<div class='header'>Action</div>" +
-									"<div class='item' onclick=\"showReservationDetails('" + d.Data[i].Id + "')\"><i class='eye blue icon'></i>See details</div>" +
-									"<div class='ui divider'></div>" +
-									((wxDateToTime(d.Data[i].Checkoutdate) > today.getTime()) ?
-									"<div class='item' onclick=\"acceptPayment('" + d.Data[i].Id + "')\"><i class='money green icon'></i>Accept payment</div>" : "") +
-									(((wxDateToTime(d.Data[i].Checkindate) <= today.getTime()) && (wxDateToTime(d.Data[i].Checkoutdate) > today.getTime())) ?
-									"<div class='item' onclick=\"checkinReservation('" + d.Data[i].Id + "')\"><i class='check green icon'></i>Check in</div>" +
-										"<div class='ui divider'></div>" : "") +
-									((today.getTime() >= wxDateToTime(d.Data[i].Checkindate)) ?
-									"<div class='item' onclick=\"confirmMarkNoShow('" + d.Data[i].Id + "')\"><i class='calendar red outline alternate times icon'></i>Mark no-show</div>" : "") +
-									(((wxDateToTime(d.Data[i].Checkoutdate) > today.getTime())) ?
-									"<div class='item' onclick=\"confirmCancelReservation('" + d.Data[i].Id + "')\"><i class='trash red icon'></i>Cancel reservation</div>" : "") +
-									"</div>" +
-									"</div></div>";
-							}
-						}
+						generateReservationButton(td6, d.Data[i]);
 
 						row.appendChild(td0);
 						row.appendChild(td1);
@@ -8643,6 +9433,54 @@
 		}, request);
 	}
 
+	function generateReservationButton(element, reservation)
+	{
+		let t = new Date();
+		let today = new Date(t.getFullYear(), t.getMonth(), t.getDate());
+		let markNoShowFunction = reservation.Paidamount > 0 ? 'callRefundPaymentModal' : 'confirmMarkNoShow';
+
+		if(reservation.Noshow)
+		{
+			element.innerHTML = "<div class='pad-1'><button class='ui disabled icon button'><i class='cog red icon icon'></i></button></div>";
+		}
+		else
+		{
+			if (reservation.Checkedin == true)
+			{
+				element.innerHTML = "<div class='w3-container'> " +
+					"<div id='" + reservation.Id + "-btn' class='ui icon top right pointing dropdown button c-menu s-float-r'>" +
+					"<i class='blue wrench icon'></i>" +
+					"<div class='menu'>" +
+					"<div class='header'>Action</div>" +
+					"<div class='item' onclick=\"showReservationDetails('" + reservation.Id + "')\"><i class='eye blue icon'></i>See details</div>" +
+					"</div>" +
+					"</div></div>";
+			}
+			else
+			{
+				element.innerHTML = "<div class='w3-container'> " +
+					"<div id='" + reservation.Id + "-btn' class='ui icon top right pointing dropdown button c-menu s-float-r'>" +
+					"<i class='blue wrench icon'></i>" +
+					"<div class='menu'>" +
+					"<div class='header'>Action</div>" +
+					"<div class='item' onclick=\"showReservationDetails('" + reservation.Id + "')\"><i class='eye blue icon'></i>See details</div>" +
+					"<div class='ui divider'></div>" +
+					((wxDateToTime(reservation.Checkoutdate) > today.getTime()) ?
+					"<div class='item' onclick=\"acceptPayment('" + reservation.Id + "')\"><i class='money green icon'></i>Accept payment</div>" : "") +
+					(((wxDateToTime(reservation.Checkindate) <= today.getTime()) && (wxDateToTime(reservation.Checkoutdate) > today.getTime())) ?
+					"<div class='item' onclick=\"checkinReservation('" + reservation.Id + "')\"><i class='check green icon'></i>Check in</div>" +
+						"<div class='ui divider'></div>" : "") +
+					((today.getTime() >= wxDateToTime(reservation.Checkindate) && reservation.CanMarkNoShow) ?
+					"<div class='item' onclick=\""+markNoShowFunction+"('" + reservation.Id + "')\"><i class='calendar red outline alternate times icon'></i>Mark no-show</div>" : "") +
+					(((wxDateToTime(reservation.Checkoutdate) > today.getTime()) && reservation.Noshow == 0 && reservation.UnconfirmedNoShow == 0) ?
+					"<div class='item' onclick=\"confirmCancelReservation('" + reservation.Id + "')\"><i class='trash red icon'></i>Cancel reservation</div>" : "") +
+					"</div>" +
+					"</div></div>";
+					
+			}
+		}
+	}
+
 	function populateInHouseTable(page)
 	{
 		let request = {};
@@ -8654,6 +9492,7 @@
 		request.job = "get inhouse";
 
 		request.dueDate = $("#departure-due-date").val();
+		request.dueDateTo = $("#departure-due-date-range").val();
 
 		if($("#due-departure").hasClass("active"))
 		{
@@ -8683,16 +9522,20 @@
 
 
 		$("#table-body").html(tableLoader(7));
-		postJson("hms-admin/worker", function(data, status){
+		postJson(url.main+"hms-admin/worker", function(data, status){
 			$("#table-body").html("");
 
 			if(status === "done")
 			{
 				let d = JSON.parse(data);
-
-				if(d.Status === "success")
+				const storage = d.Data || [];
+				localStorage.setItem('departures', JSON.stringify(storage));
+	
+				if (d.Status === "success")
 				{
 					//on success
+					const storage = d.Data || [];
+					localStorage.setItem('customers', JSON.stringify(storage));
 
 					$("#checkout-due-today-con").html(d.dueToday);
 					$("#checkout-overdue").html(d.overDue);
@@ -8712,7 +9555,6 @@
 					{
 						for(let j = 0; j < d.Data[i].Rooms.length; j++)
 						{
-							console.log(d.Data[i].Rooms[j]);
 							let row = document.createElement("tr");
 							row.id = d.Data[i].Id +"-"+(d.Data[i].Rooms[j].Category.Name ?? 'cat-' + j)+"-"+(d.Data[i].Rooms[j].Number ?? j)+"-row";
 							row.setAttribute("row-num", sn);
@@ -8747,7 +9589,7 @@
 							let td4 = document.createElement("td");
 							td4.style.lineHeight = "170%";
 
-							let b = ((Number(d.Data[i].Total) + Number(d.Data[i].Bills)) - Number(d.Data[i].Paidamount));
+							let b = ((Number(d.Data[i].Total) + Number(d.Data[i].Bills)) - Number(d.Data[i].Paidamount) - Number(d.Data[i].Discount));
 
 							td4.innerHTML = "<span style='color: silver;'>Deposit:</span> &#8358; "+
 								numFormat(Number(d.Data[i].Paidamount).toFixed(2)) +
@@ -8898,7 +9740,7 @@
 
 
 		$("#table-body").html(tableLoader(8));
-		postJson("hms-admin/worker", function(data, status){
+		postJson(url.main+"hms-admin/worker", function(data, status){
 			$("#table-body").html("");
 
 			if(status === "done")
@@ -8908,6 +9750,7 @@
 				if(d.Status === "success")
 				{
 					//on success
+					localStorage.setItem('customers', JSON.stringify(d.Data));
 
 					$("#customer-all-guest").html(d.allGuest);
 					$("#customer-in-house-guest").html(d.inHouse);
@@ -8945,12 +9788,15 @@
 						let td3 = document.createElement("td");
 						td3.style.lineHeight = "170%";
 						td3.innerHTML = "<span style='color: silver;'>Phone:</span> "+ d.Data[i].Phone.substring(0,5) + '######'+
-							"<br/><span style='color: silver;'>Email </span> "+ d.Data[i].InternalEmail;
+							"<br/><span style='color: silver;'>Email </span> "+ d.Data[i].InternalEmail + 
+							"<br/><span style='color: silver;'>Banned: </span><span style='color: dimgray;'>" +
+							(d.Data[i].isBanned ? '<span style="color: #fff;background: #ff4734;padding: 3px;border-radius: 5px;font-size: 11px;">Yes</span>' : '<span style="color: #fff;background: #51c854;padding: 3px;border-radius: 5px;font-size: 11px;">No</span>')+"</span>";
 
 
 						let td4 = document.createElement("td");
 						td4.style.lineHeight = "170%";
 						td4.innerHTML = d.Data[i].Sex == "" ? "<span style='color: silver;'>None</span>" : "<span class='blue-back status'>"+d.Data[i].Sex+"</span>";
+
 
 						let td5 = document.createElement("td");
 						td5.style.lineHeight = "170%";
@@ -9056,7 +9902,7 @@
 			"</div>" +
 			"</div>");
 
-		postJson("hms-admin/worker", function(data, status) {
+		postJson(url.main+"hms-admin/worker", function(data, status) {
 
 			if(status === "done")
 			{
@@ -9068,61 +9914,118 @@
 						"<div class='pad-2'>" +
 						"<div><button class='ui sleak basic button' onclick='drawGuest()'><i class='left arrow icon'></i> back to customers</button></div>" +
 						"<div style='margin-top: 40px;'>" +
-						"<div class='w3-row'>" +
-						"<div class='w3-col l4 m6 s12'>" +
+						"<div class='l-width-12' style='margin: auto;'>" +
+						"<div class='w3-row m-pad-1 s-pad-1'>" +
+						"<div class='w3-col l3 m3 s12'>" +
+						"<div class=''>" +
+						"<div class='widget load-slip curve w3-card align-c'>" +
+						"<div id='profile-img-con'>" +
+						"</div>" +
+						"</div>" +
+						"<div class='pad-1 widget w3-card curve' style='color: silver; margin-top: 10px;'>" +
+						"<h6 class='sleak load-slip' style='font-weight: bold; color: steelblue;'>Account Activity</h6><br/>" +
+						'<div id="account-activity">\
+							<ul class="list-flex">\
+								<li>\
+									<span>Reservations</span>\
+									<span id="total-reservations">0</span>\
+								</li>\
+								<li>\
+									<span>Lodging</span>\
+									<span id="total-lodging">0</span>\
+								</li>\
+								<li>\
+									<span>No Show</span>\
+									<span id="total-noshow">0</span>\
+								</li>\
+								<li>\
+									<span>Reviews</span>\
+									<span id="total-reviews">0</span>\
+								</li>\
+							</ul>\
+						</div>'+
+						"</div>" +
+						"</div>" +
+						"</div>" +
+
+
+						"<div class='w3-col l9 m9 s12'>" +
+						"<div class='l-width-8' style='margin: auto;'>" +
 						"<div>" +
-						"<div style='max-width: 250px;'>" +
-						"<div class=''>" +
-						"<div class='' style='max-width: 100px; ='>" +
-						"<img src='"+(d.Data.Profilepic == "" ? cdn+"images/manager.svg" : cdn + "../files/"+d.Data.Profilepic)+"' style='max-width: 100%;'/>" +
+						"<h6 class='load-slip status' style='float: right;'>Status</h6>" +
+						"<h3 id='customer-name' class='sleak load-slip' style='margin: 0px; margin-top: 10px;'>Full Name</h3>" +
+						"<small class='load-slip'>Created: <span id='creation-date' class='load-slip'>date</span></small>" +
 						"</div>" +
-						"<div class='ui wide line'></div> " +
-						"<h3 style='font-weight: normal; margin: 0; margin-top: 5px; font-family: Nunito;'><span style='color: silver;'>Name: </span>"+d.Data.Name+" "+d.Data.Surname+"</h3> " +
-						"<h4 style='font-family: Nunito; margin: 0; margin-top: 5px;'><span style='color: silver;'>Email: </span>"+d.Data.InternalEmail+"</h4> " +
-						"<h4 style='font-family: Nunito; margin: 0; margin-top: 5px;'><span style='color: silver;'>Phone: </span>"+d.Data.Phone.substring(0,5)+"######</h4>" +
-						"<br/> " +
-						"<h4 style='font-family: Nunito; margin: 0; margin-top: 5px;'><span style='color: silver;'>City: </span>"+d.Data.City+"</h4> " +
-						"<h4 style='font-family: Nunito; margin: 0; margin-top: 5px;'><span style='color: silver;'>State: </span>"+d.Data.State+"</h4>" +
-						"<h4 style='font-family: Nunito; margin: 0; margin-top: 5px;'><span style='color: silver;'>Address: </span>"+d.Data.Street+"</h4>" +
-						"</div>" +
-						"</div>" +
-						"</div>" +
-						"</div>" +
-						"<div class='w3-col l8 m6 s12'>" +
-						"<div class=''>" +
-						"<h3 style='font-family: Nunito, quicksandregular; color: dimgray; margin: 0;'>Customer reservations</h3>" +
-						"<table class='ui table'>" +
-						"<thead>" +
-						"<tr>" +
-						"<th></th>" +
-						"</tr>" +
-						"</thead>" +
-						"<tbody></tbody>" +
-						"<tfood></tfood>" +
-						"</table>" +
-						"</div>" +
-						"</div><br/><br/>" +
 
-
-						"<div class='w3-col l8 m6 s12'>" +
-						"<div class=''>" +
-						"<br/>" +
-						"<h3 style='font-family: Nunito, quicksandregular; color: dimgray; margin: 0;'>Customer request</h3>" +
-						"<table class='ui table'>" +
-						"<thead>" +
-						"<tr>" +
-						"<th></th>" +
-						"</tr>" +
-						"</thead>" +
-						"<tbody></tbody>" +
-						"<tfood></tfood>" +
-						"</table>" +
+						"<div style='margin-top: 20px;'>" +
+						"<div class='widget pad-t curve w3-card' style='background-color: whitesmoe;' id='customer-profile'>" +
+						
 						"</div>" +
 						"</div>" +
 
+						"</div>" +
+						"</div>" +
+						"</div>" +
 						"</div>" +
 						"</div>" +
 						"</div>");
+
+						var src = (d.Data.Profilepic == "" ? cdn+"images/manager.svg" : cdn + "../files/"+d.Data.Profilepic);
+
+						// load image
+						if (d.Data.isActivated === true)
+						{
+							$("#profile-img-con").html(
+								"<div style='position:relative; padding-top:10px; padding-bottom:10px;'>" +
+								"<img id='gallery-image-profile' src='"+src+"' style='max-width: 100%;'/>" +
+								"</div>"); 
+						}
+						else
+						{
+							$("#profile-img-con").html(
+								"<div style='position:relative; padding-top:10px; padding-bottom:10px;'>" +
+								"<img id='gallery-image-profile' src='"+src+"' style='max-width: 100%;'/>" +
+								"<label for='update-picture'>"+
+								"<input type='file' name='profile-picture' onchange=\"processGalleryImage(this, 'profile', false, '"+src+"', 'updateProfileImage');\" id='update-picture' style='display:none;' accept='.jpg,.png,.jpeg,.gif'/>"+
+								"<input type='hidden' id='gallery-image-name-profile'/>"+
+								"<span class='update-picture-button' id='gallery-btn-profile'><i class='picture icon'></i></span>"+
+								"</label>"+
+								"</div>");
+						}
+
+
+						$("#creation-date").html(d.Data.Created.WeekDay+", "+d.Data.Created.Day+"/"+d.Data.Created.MonthName+"/"+d.Data.Created.Year);
+						$("#customer-name").html(d.Data.Name+" "+d.Data.Surname);
+
+						// load html
+						let html = d.Data.isActivated === true ? '<br/><button class="ui sleak blue button" disabled>Save</button>' : '<br/><button id="billing-btn" class="ui sleak blue button" onclick="addCustomerInfo()">Save</button><input type="hidden" id="guest-id" value="'+d.Data.Id+'"/>';
+
+						// load email
+						let email = d.Data.isActivated === true ? d.Data.InternalEmail : d.Data.Email;
+
+						// load phone
+						let phone = d.Data.isActivated === true ? d.Data.Phone.substring(0,5) + '######' : d.Data.Phone;
+
+						// load customer profile
+						$("#customer-profile").html(getCustomerForm({
+							guest : {
+								name : d.Data.Name,
+								surname : d.Data.Surname,
+								phone : phone,
+								email : email,
+								sex : d.Data.Sex,
+								dob : d.Data.DOB,
+								state : d.Data.State,
+								city : d.Data.City,
+								address : d.Data.Address,
+							}
+						}, html));
+
+						$('#country').dropdown('set selected', d.Data.Country);
+						$('#total-reservations').text(d.Data.Activity.Reservations);
+						$('#total-lodging').text(d.Data.Activity.Lodging);
+						$('#total-noshow').text(d.Data.Activity.NoShow);
+						$('#total-reviews').text(d.Data.Activity.Reviews);
 
 				}
 				else
@@ -9295,5 +10198,583 @@
 					errorButton({btn:"add-id-btn", msg:"Connection error"});
 				}
 			});
+		}
+	}
+
+	function getCustomerForm(customer = {guest : {}}, html = '')
+    {
+        return "<div class='l-pad-2 m-pad-1'>" +
+        "<div class='w3-row'>" +
+        "<div class='w3-col l6 m6 s12'>" +
+        "<div class='l-width-xl'>" +
+        "<div class='ui fluid left icon input'>" +
+        "<i class='user circel icon'></i> " +
+        "<input id='guest-name' class='wix-textbox' value='"+(customer.guest.name != null ? customer.guest.name : '')+"' placeholder='Name' type='text'/>" +
+        "</div>" +
+        "</div>" +
+        "</div> " +
+        "<div class='w3-col l6 m6 s12'>" +
+        "<div class=''>" +
+        "<div class='ui fluid left icon input'>" +
+        "<i class='icon'></i>" +
+        "<input id='guest-surname' class='wix-textbox' value='"+(customer.guest.surname != null ? customer.guest.surname : '')+"' placeholder='Surname' type='text'/>" +
+        "</div>" +
+        "</div>" +
+        "</div> " +
+        "</div> " +
+
+        "<div class='w3-row' style='margin-top: 10px;'>" +
+        "<div class='w3-col l4 m4 s12'>" +
+        "<div class='l-width-xl'>" +
+        "<div class='ui fluid left icon input'>" +
+        "<i class='mobile icon'></i> " +
+        "<input id='guest-phone' class='wix-textbox'  value='"+(customer.guest.phone != null ? customer.guest.phone : '')+"' placeholder='Phone' type='text'/>" +
+        "</div>" +
+        "</div>" +
+        "</div> " +
+        "<div class='w3-col l8 m8 s12'>" +
+        "<div class=''>" +
+        "<div class='ui fluid left icon input'>" +
+        "<i class='at icon'></i>" +
+        "<input id='guest-email' class='wix-textbox' value='"+(customer.guest.email != null ? customer.guest.email : '')+"' placeholder='Email' type='text'/>" +
+        "</div>" +
+        "</div>" +
+        "</div> " +
+        "</div> " +
+
+        "<div class='w3-row' style='margin-top: 10px;'>" +
+        "<div class='w3-col l6 m6 s6' style='padding-top: 10px;'>" +
+        "<div class='w3-row'>" +
+        "<div class='w3-col l6 m6 s6'>" +
+        "<label class='user circel icon'> " +
+        "<input id='male' class='with-gap' name='gender' type='radio' "+(customer.guest.sex != null ? (customer.guest.sex != "female" ? 'checked' : '') : 'checked')+"/>" +
+        "<span>Male</span>" +
+        "</label>" +
+        "</div>" +
+        "<div class='w3-col l6 m6 s6'>" +
+        "<label class='user circle icon'> " +
+        "<input id='' class='with-gap' name='gender' type='radio' "+(customer.guest.sex != null ? (customer.guest.sex == "female" ? 'checked' : '') : '')+"/>" +
+        "<span>Female</span>" +
+        "</label>" +
+        "</div>" +
+        "</div>" +
+        "</div> " +
+        "<div class='w3-col l6 m6 s6'>" +
+        "<div class=''>" +
+        "<div class='ui fluid left icon input'>" +
+        "<i class='calendar alternate icon'></i>" +
+        "<input id='dob' class='wix-textbox' value='"+(customer.guest.dob != null ? customer.guest.dob : '')+"' placeholder='Date of birth' type='text'/>" +
+        "</div>" +
+        "</div>" +
+        "</div> " +
+        "</div> " +
+
+        "<div class='w3-row' style='margin-top: 10px;'>" +
+        "<div class='w3-col l4 m4 s12'>" +
+        "<div class='l-width-xl'>" +
+        countryDropdown() +
+        "</div>" +
+        "</div> " +
+        "<div class='w3-col l4 m4 s12'>" +
+        "<div class='l-width-xl'>" +
+        "<div class='ui fluid left icon input'>" +
+        "<i class='map marker icon'></i>" +
+        "<input id='guest-state' value='"+(customer.guest.state != null ? customer.guest.state : '')+"' class='wix-textbox' placeholder='State' type='text'/>" +
+        "</div>" +
+        "</div>" +
+        "</div> " +
+        "<div class='w3-col l4 m4 s12'>" +
+        "<div class=''>" +
+        "<div class='ui fluid left icon input'>" +
+        "<i class='map icon'></i>" +
+        "<input id='guest-city' value='"+(customer.guest.city != null ? customer.guest.city : '')+"' class='wix-textbox' placeholder='City' type='text'/>" +
+        "</div>" +
+        "</div>" +
+        "</div> " +
+        "</div> " +
+
+        "<div class='ui fluid form' style='margin-top: 10px;'>" +
+        "<textarea id='guest-address' class='wix-textbox' rows='3' placeholder='Address'>"+(customer.guest.address != null ? customer.guest.address : '')+"</textarea>" +
+        "</div>" +
+        html +
+        "</div>";
+        
+	}
+	
+
+	function addCustomerInfo()
+	{
+		if($("#guest-name").val() === "")
+		{
+			errorButton({btn:"billing-btn", msg:"name is empty"});
+		}
+		else if($("#guest-surname").val() === "")
+		{
+			errorButton({btn:"billing-btn", msg:"surname is empty"});
+		}
+		else if($("#guest-phone").val() === "")
+		{
+			errorButton({btn:"billing-btn", msg:"phone number is empty"});
+		}
+		else if($("#guest-email").val() === "")
+		{
+			errorButton({btn:"billing-btn", msg:"email address is empty"});
+		}
+		else if($("#guest-address").val() === "")
+		{
+			errorButton({btn:"billing-btn", msg:"guest address is empty"});
+		}
+		else
+		{
+			guest = {};
+			guest.name = $("#guest-name").val();
+			guest.surname = $("#guest-surname").val();
+			guest.phone = $("#guest-phone").val();
+			guest.email = $("#guest-email").val();
+			guest.country = $("#country").dropdown('get value');
+			guest.state = $("#guest-state").val();
+			guest.city = $("#guest-city").val();
+			guest.address = $("#guest-address").val();
+			guest.sex = $("#male").prop("checked") ? "male" : "female";
+			guest.dob = $("#dob").val();
+			guest.profilePic = $("#gallery-image-name-profile").val();
+			
+			const id = $('#guest-id').val();
+
+			if (typeof id == 'string')
+			{
+				guest.id = id;
+			}
+
+			loadingButton({btn:"billing-btn"});
+
+			// send now
+			postJson(url.main+'hms-admin/worker', function(res, status){
+
+				// stop loading
+				loadingButton({btn:"billing-btn", loading:false});
+
+				// continue
+				if (status == 'done')
+				{
+					res = JSON.parse(res);
+
+					// what do we have
+					if (res.Status == 'success')
+					{
+						$('#billing-btn').addClass('success disabled');
+						$('#billing-btn').html("<i class='check icon'></i> Updated");
+
+						// clear out
+						setTimeout(function(){
+							$('#billing-btn').removeClass('success disabled');
+							$('#billing-btn').html('Submit');
+						}, 1000);
+					}
+					else
+					{
+						errorButton({btn:"billing-btn", msg:res.Message});
+					}
+				}
+
+			}, Object.assign({
+				job : 'save property customer',
+				item_type : $("#pos-type").val()
+			}, guest));
+		}
+	}
+
+
+	function processGalleryImage(e, id, canSave=true, defaultImage = '', processFunction = null)
+	{
+		cropImage({file:e.files[0], ratio:1/1, args : arguments}, function(blob, URL, n){
+
+            getElement("gallery-image-"+n.toString()).src = URL.createObjectURL(blob);
+
+			let img = new File([blob], "file.png");
+
+			// get args
+			var args = this.CropConfig.args;
+
+            loadingButton({btn:"gallery-btn-"+n.toString()});
+            let upload = new WixUpload({file:img,url:cdn + "../upload/files"});
+            upload.Upload(function(data, status){
+                loadingButton({btn:"gallery-btn-"+n.toString(),loading:false});
+                if(status === "done")
+                {
+					var failed = true;
+
+					if (data.trim().match(/^[\{]/))
+					{
+						let d = JSON.parse(data);
+
+						if(d.status === "success")
+						{
+							// get previous image
+							let prevImage = $("#gallery-image-name-"+n.toString()).val();
+
+							// change image
+							$("#gallery-image-name-"+n.toString()).val(d.data);
+
+							// can we save??
+							if (args[2] === true){
+								activateGallery(n);
+								saveGallery(n);
+								checkGalleryPlaceholders();
+							}
+
+							// load process function
+							if (args[4] != null)
+							{
+								if (args[4].toString().match(/[\S]+/g))
+								{
+									window[args[4]](d.data, prevImage, n);
+								}
+								else
+								{
+									args[4].call(this, d.data, prevImage, n);
+								}
+							}
+
+							// process completed
+							failed = false;
+						}
+					}
+
+					// failed
+					if (failed)
+					{
+						// get default image
+						getElement("gallery-image-"+n.toString()).src = args[3];
+						ShowModal("Application error. Unable to upload image. Please try again");
+					}
+                }
+                else
+                {
+                    getElement("gallery-image-"+n.toString()).src = args[3];
+                    ShowModal("Connection error. Unable to upload image. Please try again");
+                }
+			});
+			
+		}, id);
+	}
+
+
+	let cropping = null;
+	let cropPayload = null;
+	let cropSize = "viewport"; //values viewport or original
+	let cropQuality = 1; //values 0 - 1
+  
+	function cropImage(o, func, payload) {
+	  let img = null;
+	  let resizable = true;
+	  let shape = "square";
+	  let width = 250;
+	  let height = 250;
+  
+	  // bind config
+	  this.CropConfig = o;
+  
+	  cropPayload = payload;
+  
+	  if (o != null) {
+		if (o.file != null) {
+		  img = o.file;
+		}
+		if (o.width != null) {
+		  width = o.width;
+		}
+		if (o.height != null) {
+		  height = o.height;
+		}
+		if (o.shape != null) {
+		  shape = o.shape;
+		}
+		if (o.elastic != null) {
+		  resizable = o.elastic;
+		}
+		if (o.resizable != null) {
+		  resizable = o.resizable;
+		}
+		if (o.ratio != null) {
+		  height = 250;
+		  width = Number(o.ratio * 250);
+		}
+		if (o.aspectratio != null) {
+		  height = 250;
+		  width = Number(o.aspectratio * 250);
+		}
+		if (o.size != null) {
+		  cropSize = o.size;
+		}
+		if (o.Size != null) {
+		  cropSize = o.Size;
+		}
+		if (o.quality != null) {
+		  cropSize = o.quality;
+		}
+		if (o.Quality != null) {
+		  cropSize = o.Quality;
+		}
+	  }
+  
+	  if (img != null) {
+		let modal = document.createElement("div");
+		modal.style.position = "fixed";
+		modal.style.backgroundColor = "rgba(0,0,0,0.6)";
+		modal.style.top = "0px";
+		modal.style.width = "100%";
+		modal.style.height = "100%";
+		modal.style.zIndex = 300;
+		modal.id = "passport-modal";
+		modal.style.overflowY = "auto";
+		modal.className = "w3-row";
+		modal.style.display = "none";
+  
+  
+		document.body.appendChild(modal);
+  
+  
+		$("#passport-modal").fadeIn(500, function () {
+  
+		  modal.innerHTML = "<div id='passport-modal-inner' style='display: none;'>" +
+			"<div class='w3-col l3 m2 s12' style='color: transparent;'>.</div>" +
+			"<div class='w3-col l6 m8 s12 s-pad-t'>" +
+			"<div class='widget l-margin-t-7 margin-b-3'>" +
+			"<div class='pad-1'><h6 style='font-family: quicksandbold; color: dimgray;'>Crop Image</h6></div>" +
+			"<hr style='margin: 0px;'/>" +
+			"<div class='pad-2 align-c style='width: 100%;'>" +
+			"<div id='image-crop' style='height: 250px; width: 100%;'>" +
+			"</div></div><br/><br/>" +
+			"<div class='pad-1' style='background-color: whitesmoke; border-radius: 0px 0px 4px 4px;'>" +
+			"<button class='ui compact sleak w3-green button' onclick='deliverCropedImage(" + func + ")'>OK</button>" +
+			"<button class='ui compact sleak basic button' onclick='closepassportModal()'>Cancel</button></div>" +
+			"</div></div></div><br/><br/>";
+  
+		  $("#passport-modal-inner").transition('fade right in', function () {
+  
+			//getElement("image-crop").src = URL.createObjectURL(img);
+  
+			cropping = new Croppie(getElement("image-crop"), {
+			  viewport: {
+				width: width,
+				height: height,
+				enableResize: resizable,
+				type: shape
+			  }
+			});
+  
+			cropping.bind({
+			  url: URL.createObjectURL(img),
+			});
+		  });
+		});
+	  }
+	}
+
+	function closepassportModal() {
+		$("#passport-modal-inner").transition('fade right out', function () {
+			$("#passport-modal").fadeIn(500, function () {
+				document.body.removeChild(getElement("passport-modal"));
+			});
+		});
+	}
+	
+	function deliverCropedImage(func)
+	{
+		cropping.result({ type: "blob", size: cropSize, quality: cropQuality, circle: false }).then(function (blob) {
+			if (typeof func == "function") {
+				func(blob, URL, cropPayload);
+			}
+		});
+		closepassportModal();
+	}
+
+	function callRefundPaymentModal(reservationId)
+	{
+		let res = null;
+
+		for(let i = 0; i < reservations.length; i++)
+		{
+			if(reservations[i].Id === reservationId)
+			{
+				res = reservations[i];
+				break;
+			}
+		}
+		
+		if(res === null)
+		{
+			ShowModal("Invalid reservation id selected");
+		}
+		else
+		{
+			// ConfirmModal("Are you sure you want to mark the reservation as \"no show\" ?", function (choice, param) {
+			// 	if(choice)
+			// 	{
+			// 		markNoShow(param);
+			// 	}
+			// }, null, null, e);
+
+			loadPageModal({size:"s",  onLoaded:function(m){
+				$("#modal_"+m.modal+"-inner").html(
+					"<div class='pad-2'>" +
+					"<div class=''>" +
+					"<h3 style='font-family: Nunito, quicksandregular; color: dimgray; font-weight: normal;'>" +
+					"<i class='blue la la-money-bill la-2x' style='vertical-align: middle;'></i>" +
+					"<span style='vertical-align: middle'> Mark no show with refund</span>" +
+					"</h3>" +
+					"</div>" +
+					"</div>" +
+					"<hr style='margin: 0px; padding: 0px;'/><br/>" +
+					"<div id='reservation-con'>" +
+					"<div class='pad-2' id='checkin-control-con'>" +
+					"<div>" +
+					"<h3 style='font-family: Nunito, quicksandregular, serif; font-weight: normal; vertical-align: middle;'>" +
+					"<i class='la la-user blue' style='vertical-align: middle; font-size: 1.5em;'></i>"+
+					res.Customer.Name+" "+res.Customer.Surname+"</h3>" +
+					"<h5 style='margin: 0; padding: 0; font-weight: normal; font-family: Nunito, quicksandregular;'>"+res.Customer.Email+"</h5>" +
+					"<h5 style='margin: 0; margin-top: 10px; padding: 0; font-weight: normal; font-family: Nunito, quicksandregularl'>"+res.Customer.Phone+"</h5>" +
+					"</div>" +
+					"</div>" +
+					"<hr/> " +
+					"<div class='pad-2'>" +
+					"<div class='w3-row'>" +
+					"<div class='w3-col l6 m6 s6'>" +
+					"<span style='font-family: Nunito, segoe ui;'>Bank</span> " +
+					"</div> " +
+					"<div class='w3-col l6 m6 s6'>" +
+					"<span style='font-family: Nunito, segoe ui;'>" +
+					(res.Customer.Bank == '' ? 'N/A' : res.Customer.Bank)+"</span> " +
+					"</div> " +
+					"</div> " +
+					"<div class='w3-row' style='margin-top: 10px;'>" +
+					"<div class='w3-col l6 m6 s6'>" +
+					"<span style='font-family: Nunito, segoe ui;'>Account Name</span> " +
+					"</div> " +
+					"<div class='w3-col l6 m6 s6'>" +
+					"<span style='font-family: Nunito, segoe ui;'>" +
+					(res.Customer.Accountname == '' ? 'N/A' : res.Customer.Accountname)+"</span> " +
+					"</div> " +
+					"</div> " +
+					"<div class='w3-row' style='margin-top: 10px;'>" +
+					"<div class='w3-col l6 m6 s6'>" +
+					"<span style='font-family: Nunito, segoe ui;'>Account Number</span> " +
+					"</div> " +
+					"<div class='w3-col l6 m6 s6'>" +
+					"<span style='font-family: Nunito, segoe ui;'>" +
+					(res.Customer.Accountnumber == '' ? 'N/A' : res.Customer.Accountnumber)+"</span> " +
+					"</div> " +
+					"</div> " +
+					"<div class='w3-row' style='margin-top: 10px;'>" +
+					"<div class='w3-col l6 m6 s6'>" +
+					"<span style='font-family: Nunito, segoe ui;'>Paid</span> " +
+					"</div> " +
+					"<div class='w3-col l6 m6 s6'>" +
+					"<span style='font-family: Nunito, segoe ui;'>" +
+					"<span style='font-family: Lato;'> &#8358;</span>"+
+					numFormat(Number(res.Paidamount).toFixed(2))+"</span> " +
+					"</div> " +
+					"</div> " +
+					"<div class='w3-row' style='margin-top: 10px;'>" +
+					"<div class='w3-col l6 m6 s6'>" +
+					"<span style='font-family: Nunito, segoe ui;'>Refund</span> " +
+					"</div> " +
+					"<div class='w3-col l6 m6 s6'>" +
+					"<span style='font-family: Nunito, segoe ui;'>" +
+					"<span style='font-family: Lato;'> &#8358;</span>"+
+					numFormat(Number(res.Paidamount).toFixed(2))+"</span> " +
+					"</div> " +
+					"</div> " +
+					"</div>" +
+					"<hr/>" +
+					
+					"<div class='pad-2' style='padding-top:5px'>" +
+					"<label class='' style='font-family: Nunito, quicksandregular; display:block;'>How would you like to make the refund?</label>" +
+					"<div class='w3-row' style='margin-top: 15px;'>" +
+					"<div class='w3-col l6 m6 s6'>" +
+					"<label><input id='cash_payment' name='pay-method' class='with-gap' type='radio' /><span>Cash</span></label>" +
+					"</div> " +
+					"<div class='w3-col l6 m6 s6'></div> " +
+					"<label><input id='pos_payment' name='pay-method' class='with-gap' type='radio' /><span>POS (credit / debit card)</span></label>" +
+					"</div>" +
+					"<div class='w3-row' style='margin-top: 15px;'>" +
+					"<div class='w3-col l6 m6 s6'>" +
+					"<label><input id='transfer_payment' name='pay-method' class='with-gap' type='radio' /><span>Transfer / deposit</span></label>" +
+					"</div> " +
+					"<div class='w3-col l6 m6 s6'></div> " +
+					"<label><input id='others_payment' name='pay-method' class='with-gap' type='radio' /><span>Others</span></label>" +
+					"</div>" +
+					"</div> " +
+					"<hr/>" +
+					"<div class='pad-2' style='padding-top:5px'>" +
+					"<div class=''>" +
+					"<label class='' style='font-family: Nunito, quicksandregular; display:block; margin-bottom:7px;'>Message</label>" +
+					"<textarea id='refund-text' class='wix-textbox' rows='5' style='display:block; border:1px solid #eee; border-radius:5px; padding:10px; font-family: Nunito, quicksandregular; width:100%; outline:none; box-shadow:none;' placeholder='Personal comment from you to the partner manager'></textarea>" +
+					"</div>" +"<br/>" +
+					"<button id='refund-btn' class='ui blue button' style='font-family: Nunito, quicksandregular; margin-top: 10px;' onclick=\"processRefund('"+res.Id+"','"+m.modal+"')\">Submit</button> " +
+					"</div> " +
+				"</div>");
+			}});
+		}
+	}
+
+
+	function processRefund(reservationId, modal)
+	{
+		let res = null;
+
+		for(let i = 0; i < reservations.length; i++)
+		{
+			if(reservations[i].Id === reservationId)
+			{
+				res = reservations[i];
+				break;
+			}
+		}
+
+		if(res === null)
+		{
+			ShowModal("Invalid reservation id selected");
+		}
+		else
+		{
+			let message = $("#refund-text").val();
+			let method = "";
+
+			if((getElement("cash_payment") != null) && (getElement("cash_payment").checked))
+			{
+				method = "cash";
+			}
+			else if((getElement("pos_payment") != null) && (getElement("pos_payment").checked))
+			{
+				method = "pos";
+			}
+			else if((getElement("transfer_payment") != null) && (getElement("transfer_payment").checked))
+			{
+				method = "transfer";
+			}
+			else if((getElement("others_payment") != null) && (getElement("others_payment").checked))
+			{
+				method = "others";
+			}
+			else
+			{
+				errorButton({btn:"refund-btn", msg:"Select payment method"});
+			}
+
+			if ((method !== ""))
+			{
+				markNoShow(reservationId, {
+					payment_method : method,
+					message : message
+				});
+				
+				$("#refund-btn").html("<i class='check icon'></i> refund processed");
+				$("#refund-btn").prop("disabled", true);
+				setTimeout(function(){
+					closeGenModal(modal);
+				}, 1000);
+			}
 		}
 	}

@@ -1458,17 +1458,14 @@
     if (typeof e == "string") {
       var id = document.getElementById(e);
 
-      // check callback
-      if (callback !== null && typeof callback == 'function')
-      {
-          callback.call(this, id);
-      }
+        // check callback
+        if (callback !== null && typeof callback == 'function' && id !== null)
+        {
+            callback.call(this, id);
+        }
 
-      // manage failed id
-      id = (id === null) ? Object.create(null) : id;
-
-      // return id
-      return id;
+        // return id
+        return id;
     }
     else {
 
@@ -1601,6 +1598,7 @@
   function loadModal(o) {
     let m_num = 0;
 
+    
     while (getElement("modal_" + m_num) != null) {
       m_num++;
     }
@@ -1704,6 +1702,7 @@
         }
       });
     });
+
   }
 
 

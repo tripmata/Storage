@@ -1463,7 +1463,7 @@
 
 			loadingButton({btn:"passport-btn"});
 			formWorking(true);
-			let upload = new WixUpload({file:img,url:"hms-admin/upload"});
+			let upload = new WixUpload({file:img,url:phpvars.STORAGE_API_URL + "upload/files"});
 			upload.Upload(function(data, status){
 				formWorking(false);
 				loadingButton({btn:"passport-btn",loading:false});
@@ -1507,7 +1507,7 @@
 
 				loadingButton({btn:"fullshot-btn"});
 				formWorking(true);
-				let upload = new WixUpload({file:img,url:"hms-admin/upload"});
+				let upload = new WixUpload({file:img,url:phpvars.STORAGE_API_URL + "upload/files"});
 				upload.Upload(function(data, status){
 						formWorking(false);
 						loadingButton({btn:"fullshot-btn",loading:false});
@@ -1697,7 +1697,7 @@
             let img = new File([blob], "file.png");
 
             loadingButton({btn:"cover-img-btn"});
-            let upload = new WixUpload({file:img,url:"hms-admin/upload"});
+            let upload = new WixUpload({file:img,url:phpvars.STORAGE_API_URL + "upload/files"});
             upload.Upload(function(data, status){
                 formWorking(false);
                 loadingButton({btn:"cover-img-btn",loading:false});
@@ -2903,7 +2903,7 @@ function savePrivacyPolicy()
             let img = new File([blob], "file.png");
 
             loadingButton({btn:"gallery-btn-"+n.toString()});
-            let upload = new WixUpload({file:img,url:"hms-admin/upload"});
+            let upload = new WixUpload({file:img,url:phpvars.STORAGE_API_URL + "upload/files"});
             upload.Upload(function(data, status){
                 loadingButton({btn:"gallery-btn-"+n.toString(),loading:false});
                 if(status === "done")
@@ -3122,7 +3122,7 @@ function savePrivacyPolicy()
 			let img = new File([blob], "file.png");
 
 			loadingButton({btn:"service-btn-"+n.toString()});
-			let upload = new WixUpload({file:img,url:"hms-admin/upload"});
+			let upload = new WixUpload({file:img,url:phpvars.STORAGE_API_URL + "upload/files"});
 			upload.Upload(function(data, status){
 				loadingButton({btn:"service-btn-"+n.toString(),loading:false});
 				if(status === "done")
@@ -3400,7 +3400,7 @@ function savePrivacyPolicy()
 			let img = new File([blob], "file.png");
 
 			loadingButton({btn:"facilities-btn-"+n.toString()});
-			let upload = new WixUpload({file:img,url:"hms-admin/upload"});
+			let upload = new WixUpload({file:img,url:phpvars.STORAGE_API_URL + "upload/files"});
 			upload.Upload(function(data, status){
 				loadingButton({btn:"facility-btn-"+n.toString(),loading:false});
 				if(status === "done")
@@ -3681,7 +3681,7 @@ function savePrivacyPolicy()
             let img = new File([blob], "file.png");
 
             loadingButton({btn:"team-btn-"+n.toString()});
-            let upload = new WixUpload({file:img,url:"hms-admin/upload"});
+            let upload = new WixUpload({file:img,url:phpvars.STORAGE_API_URL + "upload/files"});
             upload.Upload(function(data, status){
                 loadingButton({btn:"team-btn-"+n.toString(),loading:false});
                 if(status === "done")
@@ -3905,7 +3905,7 @@ function savePrivacyPolicy()
 			let img = new File([blob], "file.png");
 
 			loadingButton({btn:"testimonial-btn-"+n.toString()});
-			let upload = new WixUpload({file:img,url:"hms-admin/upload"});
+			let upload = new WixUpload({file:img,url:phpvars.STORAGE_API_URL + "upload/files"});
 			upload.Upload(function(data, status){
 				loadingButton({btn:"testimonial-btn-"+n.toString(),loading:false});
 				if(status === "done")
@@ -4526,7 +4526,7 @@ function savePrivacyPolicy()
             let img = new File([blob], "file.png");
 
             loadingButton({btn:"room-btn-"+n.toString()});
-            let upload = new WixUpload({file:img,url:"hms-admin/upload"});
+            let upload = new WixUpload({file:img,url:phpvars.STORAGE_API_URL + "upload/files"});
             upload.Upload(function(data, status){
                 loadingButton({btn:"room-btn-"+n.toString(),loading:false});
                 if(status === "done")
@@ -7098,7 +7098,7 @@ function savePrivacyPolicy()
 	{
 		loadingButton({btn:"logo-upload-btn"});
 
-		let upload = new WixUpload({file:e.files[0], url:"hms-admin/upload"});
+		let upload = new WixUpload({file:e.files[0], url:phpvars.STORAGE_API_URL + "upload/files"});
 		upload.Upload(function(data, status){
 			loadingButton({btn:"logo-upload-btn", loading:false});
 			if(status === "done")
@@ -8091,7 +8091,7 @@ function savePrivacyPolicy()
             let img = new File([blob], "file.png");
 
             loadingButton({btn:"item-btn-"+n.toString()});
-            let upload = new WixUpload({file:img,url:"hms-admin/upload"});
+            let upload = new WixUpload({file:img,url:phpvars.STORAGE_API_URL + "upload/files"});
             upload.Upload(function(data, status){
                 loadingButton({btn:"item-btn-"+n.toString(),loading:false});
                 if(status === "done")
@@ -8132,7 +8132,7 @@ function savePrivacyPolicy()
 			let img = new File([blob], "file.png");
 
 			loadingButton({btn:"item-btn-"+n.toString()});
-			let upload = new WixUpload({file:img,url:"hms-admin/upload"});
+			let upload = new WixUpload({file:img,url:phpvars.STORAGE_API_URL + "upload/files"});
 			upload.Upload(function(data, status){
 				loadingButton({btn:"item-btn-"+n.toString(),loading:false});
 				if(status === "done")
@@ -13483,7 +13483,7 @@ function savePrivacyPolicy()
     {
     	if(e.files.length > 0)
 		{
-			let upload = new WixUpload({file: e.files[0], url: "hms-admin/upload"});
+			let upload = new WixUpload({file: e.files[0], url: phpvars.STORAGE_API_URL + "upload/files"});
 			loadingButton({btn: "email-attachment-btn"});
 			$("#email-attachment-txt").html("Uploading attachment...");
 			upload.Upload(function (data, status) {

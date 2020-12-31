@@ -838,13 +838,10 @@
             var id = document.getElementById(e);
 
             // check callback
-            if (callback !== null && typeof callback == 'function')
+            if (callback !== null && typeof callback == 'function' && id !== null)
             {
                 callback.call(this, id);
             }
-
-            // manage failed id
-            id = (id === null) ? Object.create(null) : id;
 
             // return id
             return id;

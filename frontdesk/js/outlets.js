@@ -5,14 +5,14 @@
 
 	function logoutOutlet()
 	{
-		if (location.href.match(/(\?handshake)/))
+		if (location.href.match(/(partner\.)/))
 		{
 			window.close();
 		}
 		else
 		{
 			loadingButton({btn:"logout-btn"});
-			postJson("logout", function(data, status){
+			postJson(url.main+"logout", function(data, status){
 				loadingButton({btn:"logout-btn",loading:false});
 				if(status == "done")
 				{
@@ -475,13 +475,10 @@
 			var id = document.getElementById(e);
 
 			// check callback
-			if (callback !== null && typeof callback == 'function')
+			if (callback !== null && typeof callback == 'function' && id !== null)
 			{
 				callback.call(this, id);
 			}
-
-			// manage failed id
-			id = (id === null) ? Object.create(null) : id;
 
 			// return id
 			return id;

@@ -13,6 +13,9 @@ class Bookingstrip
 
 		this.span = span;
 		this.style = style;
+		this.allDates = []
+		this.everyResevation = []
+		this.roomTotal = 0;
 
 		let strip = document.createElement("div");
 		strip.className = "w3-row";
@@ -63,7 +66,7 @@ class Bookingstrip
 			box.innerHTML = "<label class='calendar-label'>"+date.getDate()+"</label><br/>" +
 				"<label class='calendar-label'>"+Bookingstrip.intToShortWeekDay(date.getDay())+"</label>";
 			colum1.appendChild(box);
-
+			this.allDates.push({date: parseInt(date.getDate()), year: parseInt(date.getFullYear())});
 			dateSTatmp++;
 			stamp += (((60 * 60) * 24) * 1000);
 		}
@@ -78,6 +81,7 @@ class Bookingstrip
 			box.innerHTML = "<label class='calendar-label'>"+date.getDate()+"</label><br/>" +
 				"<label class='calendar-label'>"+Bookingstrip.intToShortWeekDay(date.getDay())+"</label>";
 			colum2.appendChild(box);
+			this.allDates.push({date: parseInt(date.getDate()), year: parseInt(date.getFullYear())});
 
 			dateSTatmp++;
 			stamp += (((60 * 60) * 24) * 1000);
@@ -93,6 +97,7 @@ class Bookingstrip
 			box.innerHTML = "<label class='calendar-label'>"+date.getDate()+"</label><br/>" +
 				"<label class='calendar-label'>"+Bookingstrip.intToShortWeekDay(date.getDay())+"</label>";
 			colum3.appendChild(box);
+			this.allDates.push({date: parseInt(date.getDate()), year: parseInt(date.getFullYear())});
 
 			dateSTatmp++;
 			stamp += (((60 * 60) * 24) * 1000);
@@ -105,8 +110,58 @@ class Bookingstrip
 		element.appendChild(strip);
 	}
 
-	addAvailbilityStrip()
+	allResevations(reservations){
+		let reservationDates = [];
+		reservations.forEach(reservation => {
+			let inDay = parseInt(reservation.Checkindate.Day);
+			let inYear = parseInt(reservation.Checkindate.Year);
+			let inMonth = parseInt(reservation.Checkindate.Month);
+			let outDay = parseInt(reservation.Checkoutdate.Day);
+			let outYear = parseInt(reservation.Checkoutdate.Year);
+			let outMonth = parseInt(reservation.Checkoutdate.Month);
+			
+			let checkInDate = new Date(`${inMonth}/${inDay}/${inYear}`);
+			let checkOutDate = new Date(`${outMonth}/${outDay}/${outYear}`);
+			let Difference_In_Time = checkOutDate.getTime() - checkInDate.getTime(); 
+			let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); 
+
+			var checkInStamp = checkInDate.getTime();
+			// const milliseconds = checkInStamp * 1000;
+			// const dateObject = new Date(milliseconds);
+			
+			reservationDates.push({year: checkInDate.getFullYear(), day: checkInDate.getDate(), month: checkInDate.getMonth()});
+			for(let i = 1; i < Difference_In_Days; i++){
+				if(Difference_In_Days < 2){
+					break;
+				}
+				checkInStamp += (((60 * 60) * 24) * 1000);
+				const dateObject = new Date(checkInStamp);
+				reservationDates.push({year: dateObject.getFullYear(), day: dateObject.getDate(), month: dateObject.getMonth()});
+			}
+			
+		});
+
+		return reservationDates;
+	}
+
+	setAvailableRooms(){			
+		this.everyResevation.forEach((reservation)=>{
+			var calendar = reservation.day + '' + reservation.month + '' + reservation.year;
+			// console.log(calendar);
+			var avaliabilityBox = document.querySelector('*[data-calendar="'+calendar+'"]');
+			if (avaliabilityBox !== null)
+			{
+				let totalRoomForThisDay = parseInt(avaliabilityBox.textContent) - 1;
+				avaliabilityBox.textContent = totalRoomForThisDay;				
+			}
+		});
+	}
+
+	addAvailbilityStrip(roomsList, reservations, date)
 	{
+		this.roomTotal = roomsList.map(element => element.rooms.length).reduce((accumulator, currentValue) => accumulator + currentValue)
+		this.everyResevation = this.allResevations(reservations);
+		
 		let element = this.container;
 
 		let strip = document.createElement("div");
@@ -125,11 +180,9 @@ class Bookingstrip
 		strip.appendChild(colum2);
 		strip.appendChild(colum3);
 
-
 		let dateSTatmp = 0;
 
-		let stamp = Date.now();
-
+		let stamp = date;
 
 		let start = new Date(stamp);
 		let stop = new Date(stamp + ((((60 * 60) * 24) * 30) * 1000));
@@ -143,47 +196,63 @@ class Bookingstrip
 		descCon.innerHTML = "<label>Available rooms</label>";
 		colum1.appendChild(descCon);
 
-
 		for(let i = 0; i < 7; i++)
 		{
-			//let date = new Date(stamp);
-
+			let date = new Date(stamp);
+			
+			let day = parseInt(date.getDate());
+			let month = parseInt(date.getMonth());
+			let year = parseInt(date.getFullYear());			
+			let calendar = day + '' + month + '' + year;
+			
+			
 			let box = document.createElement("div");
 			box.id = "availability-strip-"+dateSTatmp;
 			box.style.borderTop = "none";
 			box.className = "w3-col l1 m1 s1 calendar-box";
-
-			box.innerHTML = "<label class='calendar-label'>0</label>";
+			box.setAttribute('data-date', day);
+			box.setAttribute('data-year', year);
+			box.innerHTML = "<label class='calendar-label room-total' data-calendar='"+calendar+"'>"+this.roomTotal+"</label>";
 			colum1.appendChild(box);
 
 			dateSTatmp++;
-			//stamp += (((60 * 60) * 24) * 1000);
-		}
-		for(let i = 0; i < 12; i++)
-		{
-			//let date = new Date(stamp);
-
-			let box = document.createElement("div");
-			box.id = "availability-strip-"+dateSTatmp;
-			box.style.borderTop = "none";
-			box.className = "w3-col l1 m1 s1 calendar-box";
-
-			box.innerHTML = "<label class='calendar-label'>0</label>";
-			colum2.appendChild(box);
-
-			dateSTatmp++;
-			//stamp += (((60 * 60) * 24) * 1000);
+			stamp += (((60 * 60) * 24) * 1000);
 		}
 		for(let i = 0; i < 12; i++)
 		{
 			let date = new Date(stamp);
+			let day = parseInt(date.getDate());
+			let month = parseInt(date.getMonth());
+			let year = parseInt(date.getFullYear());
+			let calendar = day + '' + month + '' + year;
 
 			let box = document.createElement("div");
 			box.id = "availability-strip-"+dateSTatmp;
 			box.style.borderTop = "none";
 			box.className = "w3-col l1 m1 s1 calendar-box";
+			box.setAttribute('data-date', day);
+			box.setAttribute('data-year', year);
+			box.innerHTML = "<label class='calendar-label room-total' data-calendar='"+calendar+"'>"+this.roomTotal+"</label>";
+			colum2.appendChild(box);
 
-			box.innerHTML = "<label class='calendar-label'>0</label>";
+			dateSTatmp++;
+			stamp += (((60 * 60) * 24) * 1000);
+		}
+		for(let i = 0; i < 12; i++)
+		{
+			let date = new Date(stamp);
+			let day = parseInt(date.getDate());
+			let year = parseInt(date.getFullYear());
+			let month = parseInt(date.getMonth());
+			let calendar = day + '' + month + '' + year;
+
+			let box = document.createElement("div");
+			box.id = "availability-strip-"+dateSTatmp;
+			box.style.borderTop = "none";
+			box.className = "w3-col l1 m1 s1 calendar-box";
+			box.setAttribute('data-date', day);
+			box.setAttribute('data-year', year);
+			box.innerHTML = "<label class='calendar-label room-total' data-calendar='"+calendar+"'>"+this.roomTotal+"</label>";
 			colum3.appendChild(box);
 
 			dateSTatmp++;
@@ -193,7 +262,8 @@ class Bookingstrip
 			{
 				box.style.borderRight = "1px solid lightgray";
 			}
-		}
+		}		
+		
 		element.appendChild(strip);
 	}
 
@@ -521,7 +591,7 @@ class Bookingstrip
 			case 10:
 				ret = "Nov";
 				break;
-			case 12:
+			case 11:
 				ret = "Dec";
 				break;
 

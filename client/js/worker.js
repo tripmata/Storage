@@ -516,13 +516,10 @@
       var id = document.getElementById(e);
 
         // check callback
-        if (callback !== null && typeof callback == 'function')
+        if (callback !== null && typeof callback == 'function' && id !== null)
         {
             callback.call(this, id);
         }
-
-        // manage failed id
-        id = (id === null) ? Object.create(null) : id;
 
         // return id
         return id;
@@ -761,6 +758,7 @@
         }
       });
     });
+
   }
 
 
@@ -779,7 +777,7 @@
       modal.style.top = "0px";
       modal.style.width = "100%";
       modal.style.height = "100%";
-      modal.style.zIndex = 300;
+      modal.style.zIndex = 999999;
       modal.id = "modal_" + m_num;
       modal.style.overflowY = "auto";
       modal.className = "w3-row";
